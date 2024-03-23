@@ -1,6 +1,8 @@
 import java.util.*;
+@SuppressWarnings("unused")
+
 public class Areaofcircle {
-    
+
     public static void main(String args[]) {
         Scanner sc = new Scanner(System.in);
         
