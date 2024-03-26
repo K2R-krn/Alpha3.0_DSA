@@ -296,44 +296,158 @@ public class DOUUBBTTfacto{
 
 
 
+//     
+//     public static void printArray(int arr[]){
+//         for(int i = 0;i<arr.length;i++){
+//             System.out.print(arr[i]+ " ");
+//         }
+//         System.out.println();
+//     }
+
+
+// public static void selectionSort(int arr[]){
+//     for(int i = 0;i<arr.length-1;i++){
+//         int minPos = i;
+//         for(int j = i+1;j<arr.length-1;j++){
+//             if(arr[minPos]>arr[j]){
+//                 minPos = j;
+//             }
+//         }
+//         //swap
+//         int temp = arr[minPos];
+//         arr[minPos] = arr[i];
+//         arr[i] = temp;
+//     }
+// }
+
+
+// public static void InsertionSort(int arr[]){
+//     for(int i = 1;i<arr.length;i++){
+//         int curr = arr[i];
+//         int prev = i-1;
+
+//         //finding current position to insert
+//         while(prev>=0 && arr[prev]> curr){
+//             arr[prev+1] = arr[prev];
+//             prev--;
+//         }
+//         //insertion
+//         arr[prev+1] =  curr ;
+//     }
+// }
+
+//     public static void CountingSort(int arr[]){
+//         int largest = Integer.MIN_VALUE;
+//         for(int i = 0;i<arr.length;i++){
+//             largest = Math.max(largest, arr[i]);
+//         }
+//        int count[ ] = new int[largest+1];
+
+//        for(int i = 0;i<arr.length;i++){
+//             count[arr[i]]++;
+//        }
+
+//        //sorting
+//         int j = 0;
+//         for(int i = 0;i<count.length;i++){
+//             while(count[i]>0){
+//                 arr[j] = i;
+//                 j++;
+//                 count[i]--;
+//             }
+//         }
+//        }
+    
+
+
+    public static void PrintArray(int arr[]){
+        for(int i = 0;i<arr.length;i++){
+            System.out.print(arr[i]+" ");
+        }
+    }
+
+
+    //*    B U B B L E   S O R T     */
     public static void BubbleSort(int arr[]){
-        for(int turns = 0; turns<arr.length-1;turns++){
-            for(int j = 0; j<arr.length-1-turns;j++){
+        for(int turn = 0;turn<arr.length-1;turn++){
+            for(int j = 0;j<arr.length-1-turn;j++){
+
                 if(arr[j]>arr[j+1]){
-                    int temp =  arr[j+1];
-                    arr[j+1] = arr[j];
-                    arr[j]=temp;
-                    
+                    int temp = arr[j+1];
+                    arr[j+1]= arr[j];
+                    arr[j] = temp;
                 }
             }
         }
     }
-    public static void printArray(int arr[]){
+
+    //*   S E L E C T I O N    S O R T */
+    public static void SelectionSort(int arr[]){
         for(int i = 0;i<arr.length;i++){
-            System.out.print(arr[i]+ " ");
-        }
-        System.out.println();
-    }
+            int smallest = Integer.MAX_VALUE;
+            for(int j = i;j<arr.length;j++){
+                if(arr[j]<smallest){
+                    smallest = arr[j];
 
-
-public static void selectionSort(int arr[]){
-    for(int i = 0;i<arr.length-1;i++){
-        int minPos = i;
-        for(int j = i+1;j<arr.length-1;j++){
-            if(arr[minPos]>arr[j]){
-                minPos = j;
+                    arr[j] = arr[i];
+                    arr[i]= smallest;
+                }
             }
         }
-        //swap
-        int temp = arr[minPos];
-        arr[minPos] = arr[i];
-        arr[i] = temp;
     }
-}
 
+    //*    I N B U I L T    S O R T  */
+    public static void inbuiltSort(Integer arr[]){
+        Arrays.sort(arr);
+        // PrintArray(arr);
+    }
+
+    //  *  I N S E R T I O N    S O R T  */
+
+    public static void insertionSort(int arr[]){
+        for(int i = 1;i<arr.length;i++){
+            int curr = arr[i];
+            int prev = i-1;
+            while(prev>0 && arr[prev]>curr){
+                arr[prev+1] = arr[prev];
+                prev--;
+            }
+            arr[prev+1] = curr;
+        }
+    }
+
+    //*     C O U N T I N G   S O R T */
+    public static void countingSort(int arr[]){
+        int largest = Integer.MIN_VALUE;
+        for(int i = 0;i<arr.length;i++){
+            if(arr[i]>largest){
+                largest = arr[i];
+
+            }
+        }
+        int count[] = new int[largest+1];
+        for(int i = 0;i<arr.length;i++){
+            count[arr[i]]++;
+
+        }
+
+        int j = 0;
+        for(int i = 0;i<count.length;i++){
+            while(count[i]>0){
+                arr[j]=i;
+                j++;
+                count[i]--;
+            }
+        }
+    }
+    
     public static void main(String args[]){
         int arr[] = { 8,3 ,5,33,43,2,11,9};
-        selectionSort(arr);
-        printArray(arr);
+        
+        // SelectionSort(arr);
+        
+        countingSort(arr);
+        PrintArray(arr);
+        
     }
 }
