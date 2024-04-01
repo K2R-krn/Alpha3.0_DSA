@@ -1,14 +1,17 @@
 public class M3axSubarraySumKadaneSaLgo {                       //^ Max  Subarray   ( KADANEs ALGO )
-    public static void M3axSubarraySum(int numbers[]){
+    public static void M3axSubarraySum(int numbers[]){      //^  WITH NEGETIVE ARRAY  VERIFIED
         int ms = Integer.MIN_VALUE;
         int cs = 0;
 
         for(int i = 0; i<numbers.length;i++){
             cs+=numbers[i];
+
+            ms = Math.max(cs, ms);
+
             if(cs<0){
                 cs = 0;
             }
-            ms = Math.max(cs, ms);
+            
 
         }
         System.out.println("Out max subarray sum is : "+ ms);

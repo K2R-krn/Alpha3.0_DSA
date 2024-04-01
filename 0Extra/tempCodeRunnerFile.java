@@ -1,4 +1,1 @@
-if(currSum<0){
-            //     currSum = 0;
-
-            // }
+    public static void main(String args[]){

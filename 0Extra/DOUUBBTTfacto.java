@@ -381,6 +381,7 @@ public class DOUUBBTTfacto{
         }
     }
 
+
     //*   S E L E C T I O N    S O R T */
     public static void SelectionSort(int arr[]){
         for(int i = 0;i<arr.length;i++){
@@ -396,11 +397,13 @@ public class DOUUBBTTfacto{
         }
     }
 
+
     //*    I N B U I L T    S O R T  */
     public static void inbuiltSort(Integer arr[]){
         Arrays.sort(arr);
         // PrintArray(arr);
     }
+
 
     //  *  I N S E R T I O N    S O R T  */
 
@@ -415,6 +418,7 @@ public class DOUUBBTTfacto{
             arr[prev+1] = curr;
         }
     }
+
 
     //*     C O U N T I N G   S O R T */
     public static void countingSort(int arr[]){
@@ -441,13 +445,122 @@ public class DOUUBBTTfacto{
         }
     }
     
+
+
+
+
+    //*           2D ARRAY S
+
+    //  SEARCH
+    public static boolean searchMatrix(int arr[][], int key ){
+        for(int i = 0;i<arr.length;i++){
+            for(int j = 0;j<arr[0].length;j++){
+                if(arr[i][j]==key){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public static void printSpiral(int matrix[][]){
+        int sR=0;
+        int sC=0;
+        int eR=matrix.length-1;
+        int eC=matrix[0].length-1;
+
+        while(sR<=eR && sC<=eC){
+            //TOP  here row fixzed  and col from 0 to end
+            for(int j=sC;j<=eC;j++){
+                System.out.print(matrix[sR][j]+" ");
+            }
+
+            //Right
+            for(int i=sR+1;i<=eR;i++){
+                System.out.print(matrix[i][eC]+" ");
+            }
+
+            //Bottom
+            for(int j=eC-1;j<=sC;j--){
+                if(sR==eR){
+                    break;
+                }
+                System.out.print(matrix[eR][j]+" ");
+            }
+
+            //LEFT
+            for(int i=eR+1;i<=sR+1;i--){
+                if(sC==eC){
+                    break;
+                }
+                System.out.print(matrix[i][sC]+" ");
+            }
+            sC++;
+            sR++;
+            eC--;
+            eR--;
+        }
+
+    }
+
+    public static int diagSum(int matrix[][]){
+        int sum =0;
+        // for(int i =0;i<matrix.length;i++){
+        //     for(int j = 0;j<matrix[0].length;j++){
+        //         if(i==j){
+        //             sum+=matrix[i][j];
+        //         }else if(i+j==matrix.length-1){
+        //             sum+=matrix[i][j];
+        //         }
+        //     }
+        // }
+
+        for(int i =0;i<matrix.length;i++){
+            sum+=matrix[i][i];
+            if(i!=matrix.length-1-i){
+                sum+=matrix[i][matrix.length-i-1];
+            }
+        }
+        return sum;
+    }
+
+    public static boolean searchinSorted(int matrix[][], int key){
+        int row = 0, col = matrix[0].length-1;
+        while(row<matrix.length && col>=0){
+            if(matrix[row][col]==key){
+                System.out.println("Key found at : "+row+" , "+col);
+                return true;
+            }
+            else if(key<matrix[row][col]){
+                col--;
+            }else{
+                row++;
+            }
+        }
+        return false;
+    }
+
+    
+
     public static void main(String args[]){
-        int arr[] = { 8,3 ,5,33,43,2,11,9};
-        
-        // SelectionSort(arr);
-        
-        countingSort(arr);
-        PrintArray(arr);
-        
+        Scanner sc = new Scanner(System.in);
+
+        int matrix[][] = {{1,2,3,4},
+                            {5,6,7,8},
+                            {9,10,11,12 },
+                            {13,14,15,16}};
+        // int n = matrix.length, m=matrix[0].length;
+        // for(int i = 0;i<n;i++){
+        //     for(int j = 0;j<m;j++){
+        //         matrix[i][j] = sc.nextInt();
+        //     }
+        // }
+
+
+        searchinSorted(matrix, 12);
+        // System.out.println(diagSum(matrix)); 
+        // printSpiral(matrix);
+        // System.out.println(searchMatrix(matrix, 44));
     }
 }
