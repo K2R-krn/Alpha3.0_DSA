@@ -543,24 +543,97 @@ public class DOUUBBTTfacto{
 
     
 
-    public static void main(String args[]){
-        Scanner sc = new Scanner(System.in);
+    // public static void main(String args[]){
+    //     Scanner sc = new Scanner(System.in);
 
-        int matrix[][] = {{1,2,3,4},
-                            {5,6,7,8},
-                            {9,10,11,12 },
-                            {13,14,15,16}};
-        // int n = matrix.length, m=matrix[0].length;
-        // for(int i = 0;i<n;i++){
-        //     for(int j = 0;j<m;j++){
-        //         matrix[i][j] = sc.nextInt();
-        //     }
+    //     int matrix[][] = {{1,2,3,4},
+    //                         {5,6,7,8},
+    //                         {9,10,11,12 },
+    //                         {13,14,15,16}};
+    //     // int n = matrix.length, m=matrix[0].length;
+    //     // for(int i = 0;i<n;i++){
+    //     //     for(int j = 0;j<m;j++){
+    //     //         matrix[i][j] = sc.nextInt();
+    //     //     }
+    //     // }
+
+
+    //     searchinSorted(matrix, 12);
+    //     // System.out.println(diagSum(matrix)); 
+    //     // printSpiral(matrix);
+    //     // System.out.println(searchMatrix(matrix, 44));
+    // }
+
+
+
+
+
+    // ^     S T R I N G
+
+    public static void printString(String str){
+        // int i =0;
+        // while(i<str.length()){
+        //     System.out.print(str.charAt(i));
+        //     i++;
         // }
-
-
-        searchinSorted(matrix, 12);
-        // System.out.println(diagSum(matrix)); 
-        // printSpiral(matrix);
-        // System.out.println(searchMatrix(matrix, 44));
+        for(int i =0;i<str.length();i++){
+            System.out.print(str.charAt(i));
+        }
+        System.out.println();
     }
+
+
+    public static boolean pallindrome(String str){
+        for(int i = 0;i<str.length()/2;i++){
+            if(str.charAt(i)!=str.charAt(str.length()-1-i)){
+                return false;
+            }
+        }
+        return true;
+    }   
+
+
+    public static float shortestPath(String str){
+        
+        int x =0;
+        int y =0;
+
+        for(int i =0;i<str.length();i++){
+            char dir = str.charAt(i);
+            //South
+            if(dir=='S'){
+                y--;
+            }else if(dir=='N'){
+                y++;
+            }else if(dir == 'W'){
+                x--;
+            }else if(dir == 'E'){
+                x++;
+            }else{
+                return -1;
+            }
+        }
+        int x2 =x*x;
+        int y2 = y*y;
+        float shortestPath =(float) Math.sqrt(x2+y2); 
+        return shortestPath;
+    }
+        public static void main(String args[]){
+
+            // Scanner sc = new Scanner(System.in);
+            // String name = sc.nextLine();
+            // System.out.println(name);
+
+        //     String str = "abccdef ffksl";
+        //    printString(str);
+        // String str = "racecar";
+        // System.out.print(pallindrome(str));
+
+        // String str = "WNEENESENNN";
+        // System.out.print(shortestPath(str));
+        
+             
+            
+
+        }
 }
