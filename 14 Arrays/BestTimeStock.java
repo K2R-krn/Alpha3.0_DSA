@@ -6,17 +6,20 @@ public class BestTimeStock {
 
         for(int i = 0; i<prices.length;i++){
             if(BP<prices[i]){//profit
-            int profit = prices[i]-BP; // Today s Profit
-            maxP = Math.max(maxP, profit);
+                int profit = prices[i]-BP; // Today s Profit
+                maxP = Math.max(maxP, profit);
             }
             else{
                 BP = prices[i];
             
-        } return maxP;
+            } 
+            
+        }
+        return maxP;
     }
     public static void main(String args[]){
         int prices[] = {7,1,5,3,6,4};
         System.out.println(BuyAndSellStock(prices));
     }
-}
+    
 }
