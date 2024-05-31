@@ -1,5 +1,5 @@
 import java.util.*;                //todO     1.BUBBLE SORT   2.SELECTION SORT   3.INSERTION SORT   4.INBUILT SORT   5.COUNTING SORT
-public class BubSELinsCOUinb {
+public class AllSortsBSIC {
     
     //^  B U B B L E    S O R T
     public static void BubbleSort(int num[]){
@@ -12,7 +12,7 @@ public class BubSELinsCOUinb {
                     num[j+1]= temp;
                 }
             }
-        }    
+        }       
     }
 
      //* Optimized     B U B B L E    S O R T 
@@ -39,7 +39,7 @@ public class BubSELinsCOUinb {
         for(int i = 0; i<num.length-1;i++){
             int minPos = i;
             for(int j = i+1; j<num.length; j++){
-                if(num[minPos]<num[j]){
+                if(num[minPos]>num[j]){
                     minPos = j;
                 }
             }
@@ -103,7 +103,7 @@ public class BubSELinsCOUinb {
         //Arrays.sort(num,0,7);
         //Arrays.sort(num, Collections.reverseOrder());      //*Only work with Object type Variable so we need to use*/ " Integer "  in place of " int "  
         //CountSort(num);
-        BubbleSortOptmzd(int [] num);
+        BubbleSortOptmzd(num );
         PA(num);
     }
 }

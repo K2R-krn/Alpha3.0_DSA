@@ -161,18 +161,132 @@ public class deleteafterdone {
         return maxp;
     }
 
-    public static void main(String args[]){
+
+
+
+
+    // ^      S O R T I N G
+
+    // *    B U B B L E S O R T 
+    public static void BubSort(int arr[]){
+        int n = arr.length;
+        for(int i = 0;i<=n-2;i++){
+            boolean swap = false;
+            for(int j = 0;j<=n-2-i;j++){
+                if(arr[j]>arr[j+1]){
+                    // swap
+                    int temp = arr[j];
+                    arr[j]=arr[j+1];
+                    arr[j+1]=temp;
+                    swap = true;
+                }
+
+            }
+            if(swap==false){
+                break;
+            }
+        }
+    }
+
+    public static void PrtArr(int arr[]){
+        for(int i = 0;i<arr.length;i++){
+            System.out.print(arr[i]+" ");
+        }
+    }
+
+
+    public static void SelSort(int arr[]){
+        int n = arr.length;
+    
+        for(int i = 0;i<n-1;i++){
+            int minPos = i;
+            for(int j =i;j<n;j++){
+                if(arr[minPos]>arr[j]){
+                    minPos=j;
+                }
+            }
+            //swap
+            int temp = arr[minPos];
+            arr[minPos]=arr[i];
+            arr[i]=temp;
+        }
+    }
+
+
+    public static void InsSort(int arr[]){
+        for(int i=1;i<arr.length;i++){
+            int curr = arr[i];
+            int prev = i-1;
+
+            //finding correct position to insert
+            while(prev>=0 && arr[prev]>curr){
+                arr[prev+1] = arr[prev];
+                prev--;
+            }
+            // insertion
+            arr[prev+1] =curr;
+        }
+    }
+
+    public static void CntSrt(int arr[]){
+
+        // finding largest number in the arr
+        int largest = Integer.MIN_VALUE;
+        for(int i= 0;i<arr.length;i++){
+            largest = Math.max(largest, arr[i]);
+        }
+ 
+        //creating and adding in count array
+        int count[]= new int[largest+1];
+        for(int i = 0;i<arr.length;i++){
+            count[arr[i]]++;
+        }
+
+        //sorting
+        int j = 0; // to start from 0 in original array
+        for(int i = 0;i<count.length;i++){
+            while(count[i]>0){
+                arr[j]=i;
+                j++;
+                count[i]--;
+            }
+        }
+
+    }
+    // public static void main(String args[]){
         
         // int num[] = {2,4,6,8,10,12,14};
         // int key = 10;
         // System.out.println("At index : "+BinSearch(num, key));
 
-        int arr[] = {4,2,0,6,3,2,5};
+        // int arr[] = {4,2,0,6,3,2,5};
 
         // TrappingRainwater(arr);
 
-        System.out.println(BestTimeforStock(arr));
+        // System.out.println(BestTimeforStock(arr));
+
+
+        // int arrs[] = {1,2,3,4,5};
+        // int arr[] = {5,4,3,2,1};
+        // BubSort(arrs);
+        // InsSort(arr);
+        
+        // CntSrt(arr);
+        // PrtArr(arr);
+
+    // }
+
+
+
+
+    //^     2 D   A R R A Y S
+
+    
+
+    public static void main(String args[]){
+
+
+
 
     }
-}
-
+} 
