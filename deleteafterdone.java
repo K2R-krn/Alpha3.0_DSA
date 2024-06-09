@@ -1,3 +1,4 @@
+import java.lang.ProcessBuilder.Redirect;
 import java.util.Scanner;
 
 public class deleteafterdone {
@@ -459,7 +460,7 @@ public class deleteafterdone {
         return sb.toString();
     }
 
-    public static void main(String args[]){
+    // public static void main(String args[]){
         // String str = "racecar";
         // System.out.println(Pallindrome(str));
 
@@ -478,7 +479,299 @@ public class deleteafterdone {
         // String str = " hello WORLSD";
         // System.out.println(toUpper(str));
 
-        String str = "aaabbcccdde";
-        System.out.println(compress(str));
+    //     String str = "aaabbcccdde";
+    //     System.out.println(compress(str));
+    // }
+
+
+
+            //^     B I T  -   M A N I P U L A T I O N 
+            
+    public static void EvenorNo(int n){
+        int bitMask = 1;
+        if( (n & bitMask) ==0){
+            System.out.println("Even");
+        }else{
+            System.out.println("Odd");
+        }
+
     }
-} 
+
+    public static int GetIthBit(int n, int i){
+        int bitmask = 1<<i;
+        if((n&bitmask)==0){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
+
+    // EvenorNo(12);
+
+
+
+
+
+
+
+    //   ^      O O P
+
+
+    public static void rotateArr(int arr[], int n){
+        int ck = 0;
+        // int i = 0;
+        while(ck<n){
+            // if(i<=arr.length){
+                int temp = arr[0];
+                for(int j =0;j<arr.length-1;j++){
+    
+                    // int temp = arr[j-1];
+                    arr[j] = arr[j+1];
+                }
+                arr[arr.length-1] = temp;
+            // }
+            ck++;
+            // i++;
+        }
+        
+    }
+    public static void rotate(int[] nums) {
+        // int ck = 0;
+        // while(ck<k){
+                int temp = nums[nums.length-1];
+                for(int j =nums.length-1;j>0;j--){
+                    nums[j] = nums[j-1];
+                }
+                nums[0] = temp;
+            
+            // ck++;
+            
+        // }
+    }
+    // public static void main(String args[]){
+        // Pen p1 = new Pen();
+        // p1.setColor("Red");
+        // p1.setTip(5);
+        // System.out.println(p1.color);
+
+        // Pen p5 = new Pen();
+        // p5.OwnweID="k2r";
+        // p5.setName("String"); 
+        // System.out.println(p5.getID());
+        
+        // Fish shark = new Fish();
+        // shark.breathe();
+        
+        // int arr[] = {1,2,3,4,5};
+        // // rotateArr(arr,3);
+        // rotate(arr);
+        // for(int i = 0;i<arr.length;i++){
+        //     System.out.print(arr[i]+ " ");
+        // }
+
+//     }
+
+// } 
+
+class Animal{
+    String color;
+    void breathe(){
+        System.out.println("Breathes");
+    }
+}
+class Fish extends Animal{
+    int fins;
+    void swim(){
+        System.out.println("Swims");
+    }
+}
+
+
+
+class Pen{
+    String color;
+    int TipSize;
+    private String OwnerName;
+    public String OwnweID;
+
+    public void setName(String name){
+        OwnerName = name;
+    }
+    void setColor(String col){
+        color = col;
+    }
+    void setTip(int tip){
+        TipSize = tip;
+    }
+    String getID(){
+        return OwnweID;
+    }
+}
+
+
+
+
+public static void prtNosinDecOrder(int n){
+    if(n==1){
+        System.out.print(n);
+        return;
+    }
+    System.out.print(n+" ");
+    prtNosinDecOrder(n-1);
+
+
+}
+
+public static void prtNosinAESCOrder(int n){
+    if(n==1){
+        System.out.print(n+" ");
+        return;
+    }
+    prtNosinAESCOrder(n-1);
+    System.out.print(n+" ");
+}
+
+public static int Facto(int n){
+    if(n==0){
+        return 1;
+    }
+    // int factn-1 = Facto(n-1);
+    int factn= n*Facto(n-1);
+    return factn;
+}
+
+public static int SumNnos(int n){
+    
+    if(n==1){
+        return 1;
+    }
+    int sum = n + SumNnos(n-1);
+    return sum;
+
+}
+
+public static int Fibo(int n){
+    if(n==0 || n==1){
+        return n;
+    }
+    int fib = Fibo(n-1)+Fibo(n-2);
+    return fib;
+
+}
+
+public static boolean sortedorno(int arr[], int i){
+    if(i==arr.length-1){
+        return true;
+    }
+    if(arr[i]>=arr[i+1]){
+        return false;
+    }
+
+    return sortedorno(arr, i+1);
+}
+public static int FirstOccurance(int arr[], int i, int key){
+    if(i==arr.length-1){
+        return -1;
+    }
+    if(key==arr[i]){
+        return i;
+    }
+
+    return FirstOccurance(arr, i+1, key);
+}
+public static int LastOccurance(int arr[], int i, int key){
+    // if(n<0){
+    //     return -1;
+    // }
+    // if(key==arr[n]){
+    //     return n;
+    // }
+    // return LastOccurance(arr, n-1, key);
+
+    if(i==arr.length){
+        return -1;
+    }
+    int isFound = LastOccurance(arr, i+1, key);
+    if(isFound == -1 && arr[i]==key){
+        return i;
+    }
+    return isFound;
+}
+
+public static int powxn(int x, int n){
+    if(n==1){
+        return x;
+    }
+    int sol =x * powxn(x, n-1);
+    return sol;
+}
+public static int powxnOPTIMZD(int x, int n){
+    if(n==0){
+        return 1;
+    }
+    int halfPow = powxnOPTIMZD(x, n/2);
+    int halfPowSq = halfPow*halfPow;
+    if(n%2!=0){
+        halfPowSq = x*halfPowSq;
+    }
+    return halfPowSq;
+}
+
+
+public static int TilingProblem(int n){
+    if(n==1 || n==0){
+        return 1;
+    }
+    int fnm1 = TilingProblem(n-1);
+    int fnm2 = TilingProblem(n-2);
+    return fnm1+fnm2;
+}
+
+
+public static void removeSTRduplicate(String str, StringBuilder sb, int idx, boolean map[]){
+    if(idx == str.length()){
+        System.out.println(sb);
+        return;
+    }
+    //kaam
+    char curr = str.charAt(idx);
+    if(map[curr-'a'] == true){
+        //duplicate
+        removeSTRduplicate(str, sb, idx+1, map);
+    }else{
+        map[curr-'a']=true;
+        removeSTRduplicate(str, sb.append(curr), idx+1, map);
+    }
+}
+
+public static int friendsPair(int n){
+    if(n==1 || n==2){
+        return n;
+    }
+    // //kaaamm
+    // int fnm1 = friendsPair(n-1);
+    // int fnm2 = (n-1)*friendsPair(n-2);
+    // return fnm1+fnm2;
+    //^ FULL CODE IN ONE LINE - 
+    return friendsPair(n-1)+((n-1)*friendsPair(n-2));
+}
+public static void main(String args[]){
+    // prtNosinDecOrder(5);
+    // prtNosinAESCOrder(5);
+    // System.out.println(Facto(5));
+    // System.out.println(SumNnos(5));
+    // System.out.println(Fibo(25));
+    int arr[] = {1,2,3,4,5,9,2,9,1,6,9,2,3,5};
+    // System.out.println(sortedorno(arr, 0));
+    // System.out.print(FirstOccurance(arr, 0, 9));
+    // System.out.print(LastOccurance(arr, 0, 9));    
+    // System.out.println(powxn(2, 7));
+    // System.out.println(powxnOPTIMZD(2, 7));
+    // System.out.println(TilingProblem(4 ));
+    // removeSTRduplicate("aapnnaaccollegggeeee", new StringBuilder(""), 0, new boolean[26]);
+     System.out.println(friendsPair(10));
+
+
+}
+
+}
