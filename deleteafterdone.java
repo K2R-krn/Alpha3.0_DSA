@@ -781,8 +781,6 @@ public static int friendsPair(int n){
 
     //    ^     D I V I D E   A N D   C O N Q U E R !!
 
-
-    // *    M E R G E    S O R T
     public static void MergeSoort(int arr[], int si, int ei){
         if(si>=ei){
             return ;
@@ -832,6 +830,9 @@ public static int friendsPair(int n){
 
 
     }
+
+
+
 
     // public static void MerggeSort(int arr[],int si, int ei){
 
@@ -909,49 +910,47 @@ public static int friendsPair(int n){
         return i;
 
     }
+    // public static void QuickSorttt(int arr[], int si, int ei){
+    //     if(si>=ei){
+    //         return;
+    //     }
 
-    public static void QuickSorttt(int arr[], int si, int ei){
-        if(si>=ei){
-            return;
-        }
-
-        //pivot
-        int pidx = partionn(arr, si, ei);
-        QuickSorttt(arr, si, pidx-1);
-        QuickSorttt(arr, pidx+1, ei);
-    }
-    public static int partionn(int arr[], int si, int ei){
+    //     //pivot
+    //     int pidx = partionn(arr, si, ei);
+    //     QuickSorttt(arr, si, pidx-1);
+    //     QuickSorttt(arr, pidx+1, ei);
+    // }
+    // public static int partionn(int arr[], int si, int ei){
         
-        int pivot = arr[ei];
-        int i = si-1;
+    //     int pivot = arr[ei];
+    //     int i = si-1;
 
-        for(int j =si;j<ei;j++){
-            if(arr[j]<=pivot){
-                i++;
-                int temp = arr[j];
-                arr[j] = arr[i];
-                arr[i] = temp;
+    //     for(int j =si;j<ei;j++){
+    //         if(arr[j]<=pivot){
+    //             i++;
+    //             int temp = arr[j];
+    //             arr[j] = arr[i];
+    //             arr[i] = temp;
 
-            }
-        }
+    //         }
+    //     }
 
-        i++;
-        int temp = arr[i];
-        arr[i] = arr[ei];
-        arr[ei] = temp;
+    //     i++;
+    //     int temp = arr[i];
+    //     arr[i] = arr[ei];
+    //     arr[ei] = temp;
 
-        return i;
-    }
-
-
+    //     return i;
+    // }
 
     public static void main(String args[]){
         int arr[] = {6,3,9,5,2,8};
         // MerggeSort(arr, 0, arr.length-1);
-        QuickSorttt(arr, 0, arr.length-1);
+        // QuickSorttt(arr, 0, arr.length-1);
+        // QuickSortt(arr, 0, arr.length-1);
+        
         for(int i = 0;i<arr.length;i++){
             System.out.print(arr[i]+" ");
         }
-
     }
 }
