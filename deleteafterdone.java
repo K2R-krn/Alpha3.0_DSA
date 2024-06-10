@@ -755,13 +755,13 @@ public static int friendsPair(int n){
     //^ FULL CODE IN ONE LINE - 
     return friendsPair(n-1)+((n-1)*friendsPair(n-2));
 }
-public static void main(String args[]){
+// public static void main(String args[]){
     // prtNosinDecOrder(5);
     // prtNosinAESCOrder(5);
     // System.out.println(Facto(5));
     // System.out.println(SumNnos(5));
     // System.out.println(Fibo(25));
-    int arr[] = {1,2,3,4,5,9,2,9,1,6,9,2,3,5};
+    // int arr[] = {1,2,3,4,5,9,2,9,1,6,9,2,3,5};
     // System.out.println(sortedorno(arr, 0));
     // System.out.print(FirstOccurance(arr, 0, 9));
     // System.out.print(LastOccurance(arr, 0, 9));    
@@ -769,9 +769,153 @@ public static void main(String args[]){
     // System.out.println(powxnOPTIMZD(2, 7));
     // System.out.println(TilingProblem(4 ));
     // removeSTRduplicate("aapnnaaccollegggeeee", new StringBuilder(""), 0, new boolean[26]);
-     System.out.println(friendsPair(10));
+    //  System.out.println(friendsPair(10));
 
 
-}
+    // }
 
+
+
+
+
+
+    //    ^     D I V I D E   A N D   C O N Q U E R !!
+
+    public static void MergeSoort(int arr[], int si, int ei){
+        if(si>=ei){
+            return ;
+        }
+
+        //kaam
+        int mid = si+(ei-si)/2;
+        MergeSoort(arr, si, mid);
+        MergeSoort(arr, mid+1,ei);
+        merge(arr,si,mid,ei);
+    
+    
+    
+    }
+    public static void merge(int arr[], int si,int mid, int ei){
+        int temp[] = new int[ei-si+1];
+        int i =si; // iterator fo left part
+        int j = mid+1; // iterator for right part
+        int k = 0;  //iterator for temp arr
+
+        while(i<=mid && j<=ei){
+            if(arr[i]<arr[j]){
+                temp[k]=arr[i];
+                i++;
+            
+            }else{
+                temp[k]=arr[j];
+                j++;
+                
+            }
+            k++;
+        }
+                        
+        while(i<=mid){   //left part
+            temp[k] = arr[i];
+            k++;
+            i++;
+        }
+        while(j<=ei){    // right part
+            temp[k++] = arr[j++];
+        }
+
+        //copy temp to original arr
+        for(k=0, i=si ;k<temp.length;k++,i++){
+            arr[i] = temp[k];
+        }
+
+
+    }
+
+
+
+
+    public static void MerggeSort(int arr[],int si, int ei){
+
+        if(si>=ei){
+            return;
+        }
+        int mid = si+(ei-si)/2;
+        MerggeSort(arr, si, mid);
+        MerggeSort(arr, mid+1, ei);
+
+        mergee(arr, si, mid,ei);
+    }
+    public static void mergee(int arr[],int si,int mid,int ei){
+        int i = si;
+        int j = mid+1;
+        int k = 0;
+        int temp[] = new int[ei-si+1];
+
+        while(i<=mid && j<=ei){
+            if(arr[i]<arr[j]){
+                temp[k++]=arr[i++];
+            }else{
+                temp[k++]=arr[j++];
+            }
+        }
+        while(i<=mid){
+            temp[k++]=arr[i++];
+        }
+        while (j<=ei) {
+            temp[k++]=arr[j++];
+        }
+
+        //copy to main arr
+        for(k=0,i=si; k<temp.length; k++,i++){
+            arr[i] = temp[k];
+        }
+    }
+
+
+    // *    Q U I C K    S O R T
+
+    public static void QuickSortt(int arr[], int si, int ei){
+        if(si>=ei){
+            return;
+        }
+    
+        //1st step - FIND PIVOT
+        // that is last element
+        int pidx =partion(arr, si, ei);
+        
+        QuickSortt(arr, si, pidx-1);
+        QuickSortt(arr, pidx+1, ei);
+    }
+
+    public static int partion(int arr[], int si, int ei){
+        int pivot = arr[ei];
+        int i = si-1; //iterator to make placce for elemrents smallen than pivbot
+
+        // Elements smaller than pivot are placed on one side
+        for(int j = si;j<ei;j++){
+            if(arr[j]<=pivot){
+                i++;
+                //swap
+                int temp = arr[j];
+                arr[j]=arr[i];
+                arr[i]= temp;
+            }
+        }
+        // Now putting pivot in right place.
+        i++;
+        //swap
+        int temp = pivot;
+        arr[ei]=arr[i];
+        arr[i]= temp;
+        return i;
+
+    }
+    public static void main(String args[]){
+        int arr[] = {6,3,9,5,2,8};
+        QuickSortt(arr, 0, arr.length-1);
+        for(int i = 0;i<arr.length;i++){
+            System.out.print(arr[i]+" ");
+        }
+
+    }
 }
