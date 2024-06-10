@@ -943,14 +943,55 @@ public static int friendsPair(int n){
     //     return i;
     // }
 
+    
+    public static int searchInSorRotArr(int arr[], int si , int ei, int tar){
+        //BC
+        if(si>=ei){
+            return -1;
+        }
+
+
+        int mid = si+(ei-si)/2;
+
+        //case found at mid best case
+        if(arr[mid]==tar){
+            return mid;
+        }
+
+        //mid on L1
+        if(arr[si]<arr[mid]){
+            // case a : on left of L1
+            if(arr[si] <= tar && tar<= arr[mid]){
+                return searchInSorRotArr(arr, si, mid, tar);
+            }
+            // case b : on right of L1
+            else{
+                return searchInSorRotArr(arr, mid+1, ei, tar);
+            }
+        }
+        //mid on L2
+        else{
+            //case c : right of L2
+            if(arr[mid]<= tar && tar<=arr[ei]){
+                return searchInSorRotArr(arr, mid+1, ei, tar);
+            }
+            //case d : left of L2
+            else{
+                return searchInSorRotArr(arr, si, mid-1, tar);
+            }
+        }
+    }
     public static void main(String args[]){
         int arr[] = {6,3,9,5,2,8};
         // MerggeSort(arr, 0, arr.length-1);
         // QuickSorttt(arr, 0, arr.length-1);
         // QuickSortt(arr, 0, arr.length-1);
-        
-        for(int i = 0;i<arr.length;i++){
-            System.out.print(arr[i]+" ");
-        }
+
+        int arr2[] = {4,5,6,7,0,1,2};
+        System.out.println(searchInSorRotArr(arr2, 0, arr2.length, 0));
+
+        // for(int i = 0;i<arr.length;i++){
+        //     System.out.print(arr[i]+" ");
+        // }
     }
 }
