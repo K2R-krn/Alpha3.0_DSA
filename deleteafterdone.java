@@ -781,6 +781,8 @@ public static int friendsPair(int n){
 
     //    ^     D I V I D E   A N D   C O N Q U E R !!
 
+
+    // *    M E R G E    S O R T
     public static void MergeSoort(int arr[], int si, int ei){
         if(si>=ei){
             return ;
@@ -831,45 +833,42 @@ public static int friendsPair(int n){
 
     }
 
+    // public static void MerggeSort(int arr[],int si, int ei){
 
+    //     if(si>=ei){
+    //         return;
+    //     }
+    //     int mid = si+(ei-si)/2;
+    //     MerggeSort(arr, si, mid);
+    //     MerggeSort(arr, mid+1, ei);
 
+    //     mergee(arr, si, mid,ei);
+    // }
+    // public static void mergee(int arr[],int si,int mid,int ei){
+    //     int i = si;
+    //     int j = mid+1;
+    //     int k = 0;
+    //     int temp[] = new int[ei-si+1];
 
-    public static void MerggeSort(int arr[],int si, int ei){
+    //     while(i<=mid && j<=ei){
+    //         if(arr[i]<arr[j]){
+    //             temp[k++]=arr[i++];
+    //         }else{
+    //             temp[k++]=arr[j++];
+    //         }
+    //     }
+    //     while(i<=mid){
+    //         temp[k++]=arr[i++];
+    //     }
+    //     while (j<=ei) {
+    //         temp[k++]=arr[j++];
+    //     }
 
-        if(si>=ei){
-            return;
-        }
-        int mid = si+(ei-si)/2;
-        MerggeSort(arr, si, mid);
-        MerggeSort(arr, mid+1, ei);
-
-        mergee(arr, si, mid,ei);
-    }
-    public static void mergee(int arr[],int si,int mid,int ei){
-        int i = si;
-        int j = mid+1;
-        int k = 0;
-        int temp[] = new int[ei-si+1];
-
-        while(i<=mid && j<=ei){
-            if(arr[i]<arr[j]){
-                temp[k++]=arr[i++];
-            }else{
-                temp[k++]=arr[j++];
-            }
-        }
-        while(i<=mid){
-            temp[k++]=arr[i++];
-        }
-        while (j<=ei) {
-            temp[k++]=arr[j++];
-        }
-
-        //copy to main arr
-        for(k=0,i=si; k<temp.length; k++,i++){
-            arr[i] = temp[k];
-        }
-    }
+    //     //copy to main arr
+    //     for(k=0,i=si; k<temp.length; k++,i++){
+    //         arr[i] = temp[k];
+    //     }
+    // }
 
 
     // *    Q U I C K    S O R T
@@ -910,8 +909,23 @@ public static int friendsPair(int n){
         return i;
 
     }
+
+    public static void QuickSorttt(int arr[], int si, int ei){
+        if(si>=ei){
+            return;
+        }
+
+        //pivot
+        int pidx = partionn(arr, si, ei);
+        QuickSorttt(arr, si, pidx-1);
+        QuickSorttt(arr, pidx+1, ei);
+    }
+
+
+
     public static void main(String args[]){
         int arr[] = {6,3,9,5,2,8};
+        // MerggeSort(arr, 0, arr.length-1);
         QuickSortt(arr, 0, arr.length-1);
         for(int i = 0;i<arr.length;i++){
             System.out.print(arr[i]+" ");
