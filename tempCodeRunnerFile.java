@@ -1,4 +1,3 @@
-
-                // if(arr[i]>arr[j]){
-                //     minPos=j;
-                // }
+public static void NQueensProblem(int n){
+        
+    // }

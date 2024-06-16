@@ -1,4 +1,5 @@
 import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class deleteafterdone {
@@ -981,17 +982,168 @@ public static int friendsPair(int n){
             }
         }
     }
-    public static void main(String args[]){
+    // public static void main(String args[]){
         int arr[] = {6,3,9,5,2,8};
         // MerggeSort(arr, 0, arr.length-1);
         // QuickSorttt(arr, 0, arr.length-1);
         // QuickSortt(arr, 0, arr.length-1);
 
-        int arr2[] = {4,5,6,7,0,1,2};
-        System.out.println(searchInSorRotArr(arr2, 0, arr2.length, 0));
+        // int arr2[] = {4,5,6,7,0,1,2};
+        // System.out.println(searchInSorRotArr(arr2, 0, arr2.length, 0));
 
         // for(int i = 0;i<arr.length;i++){
         //     System.out.print(arr[i]+" ");
         // }
+    // }
+
+
+
+
+    // ^    B A C K T R A C K I N G
+
+
+    public static void findSubset(String str, String ans, int i){
+        //bc
+        if(i==str.length()){
+            System.out.println(ans);
+            return;
+        }
+        //rec
+        //yes
+        findSubset(str, ans+str.charAt(i), i+1);
+        //no
+        findSubset(str, ans, i+1);
     }
+ 
+    
+    public static void findStrPermutations(String str, String ans){
+        //bc
+        if(str.length()==0){
+            System.out.println(ans);
+            return;
+        }
+        //rec
+        for(int i = 0;i<str.length();i++){
+            char curr = str.charAt(i);
+            String Newstr = str.substring(0, i)+str.substring(i+1);
+            findStrPermutations(Newstr, ans+curr);
+        }
+    }
+
+        // &  N QUEENS
+    public static void NQueensProblem(int n){
+        char chessB[][] = new char[n][n];
+        for(int i =0;i<n;i++){
+            for(int j=0;j<n;j++){
+                chessB[i][j] = 'x';
+            }
+        }
+        NQueens(chessB,0);
+        
+     }
+    public static void NQueens(char chessB[][],int row){
+        //bc
+        if(row == chessB.length){
+            printChessBoard(chessB);
+            return;
+        }
+        // placing one queen in one row
+        for(int j = 0;j<chessB.length;j++){
+            if(isSafeQueen(chessB, row, j)){
+                chessB[row][j] = 'Q';
+                NQueens(chessB,row+1);
+                chessB[row][j] = 'x'; 
+            }
+            
+        }
+    }
+    public static boolean isSafeQueen(char chessB[][], int row, int col){
+        //first check vertically up direction
+        for(int i = row-1;i>=0;i--){
+            if(chessB[i][col] == 'Q'){
+                return false;
+            }
+        }
+
+        //for diagnol LEFT check
+        for(int i =row-1,j=col-1;i>=0 && j>=0;i--,j--){
+            if(chessB[i][j] == 'Q'){
+                return false;
+            }
+        }
+
+        //for diagnol RIGHT check
+        for(int i =row-1,j=col+1;i>=0 && j<chessB.length;i--,j++){
+            if(chessB[i][j] == 'Q'){
+                return false;
+            }
+        }
+        return true;
+
+    }
+    public static void printChessBoard(char arr[][]){
+        System.out.println("------ C B --------");
+        for(int i = 0;i<arr.length;i++){
+            for(int j=0;j<arr.length;j++){
+                System.out.print(arr[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
+
+
+    public static int gridWays(int i, int j, int n,int m){
+        //BC
+        if(i==n-1 && j==m-1){ // means standing on last cell
+            return 1;
+        }else if(i==n || j==m){ // boundary cross condition
+            return 0;
+        }
+        
+        int w1 = gridWays(i+1,j,n,m);
+        int w2 = gridWays(i, j+1, n, m);
+        return w1+w2;
+    }
+
+
+    public static int ContainerMostWater(ArrayList<Integer> height){
+        int maxWater = 0;
+        // for(int i = 0;i<height.size();i++){
+        //     for(int j = i+1;j<height.size();j++){On the same 
+        //         int ht = Math.min(height.ge t(i), height.get(j));
+        //         int width = j-1;
+        //         int currWater = ht*width;
+        //         maxWater = Math.max(maxWater, currWater);
+        //     }
+        // }
+
+
+
+        return maxWater; 
+    }
+
+
+    // public static void main(String args[]){
+        // findSubset("abc", "", 0);
+        // findStrPermutations("abc", "");
+        //& N QUEENS
+        // NQueensProblem(2);
+        // System.out.println(gridWays(0, 0, 3, 3));
+        
+        // ArrayList<Integer> height = new ArrayList<>();
+        // height.add(1);
+        // height.add(8);
+        // height.add(6);
+        // height.add(2);
+        // height.add(5);
+        // height.add(4);
+        // height.add(8);
+        // height.add(3);
+        // height.add(7);
+        // System.out.println(ContainerMostWater(height));
+    // }
+
+
+
+
 }

@@ -21,20 +21,20 @@ public class Backtracking {
         }
         return true;
     }
-    public static void nQueens(char board[][], int row){
+    public static void nQueens(char chessB[][], int row){
         // BASE
-        if(row == board.length){
-            printBoard(board);
+        if(row == chessB.length){
+            printBoard(chessB);
             ways++;
             return;
         }
 
         // Coloumn loop
-        for(int j = 0; j<board.length;j++){
-            if(isSafe(board, row, j)){
-                board[row][j] = 'Q';
-                nQueens(board, row+1);
-                board[row][j] = '.';
+        for(int j = 0; j<chessB.length;j++){
+            if(isSafe(chessB, row, j)){
+                chessB[row][j] = 'Q';
+                nQueens(chessB, row+1);
+                chessB[row][j] = '.';
             }
         }
     }
