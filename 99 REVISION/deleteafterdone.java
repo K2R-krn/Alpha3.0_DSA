@@ -1,6 +1,7 @@
 import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.*;
 
 public class deleteafterdone {
 
@@ -1142,8 +1143,5 @@ public static int friendsPair(int n){
         // height.add(7);
         // System.out.println(ContainerMostWater(height));
     // }
-
-
-
 
 }
