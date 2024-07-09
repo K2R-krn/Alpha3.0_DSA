@@ -2,7 +2,9 @@ import java.util.*;
 import java.util.LinkedList;
 public class G1raphsIntroAdjList {
     //!  1.  Creating Adjacency List and Basics of Graph
-    //!  2.   B   F   S                                       O(n)
+    //!  2.   B   F   S           O(V+E)
+    //!  3.   D   F   S           O(V+E)
+    //!  4.  Has  Path  ?         O(V+E)
     static class Edge{
         int src;
         int dest;
@@ -45,7 +47,7 @@ public class G1raphsIntroAdjList {
         graph[6].add(new Edge(6, 5, 1));
     }
 
-    //!    B   F   S                                  O(V+E) whichever more controls it basically O(n)
+    //!  2    B   F   S                                  O(V+E) whichever more controls it basically O(n)
     public static void BFS(ArrayList<Edge>[] graph){
         Queue<Integer> q = new LinkedList<>();
         boolean vis[] = new boolean[graph.length];
@@ -67,7 +69,57 @@ public class G1raphsIntroAdjList {
         }
     }
 
-    //!   D     F     S
+    public static void BFSo(ArrayList<Edge>[] graph){
+        Queue<Integer> q = new LinkedList<>();
+        boolean v[] = new boolean[graph.length];
+
+        q.add(0);
+        while(!q.isEmpty()){
+            int curr = q.remove();
+            if(!v[curr]){
+                System.out.print(curr+" ");
+                v[curr] = true;
+                for(int i=0;i<graph[curr].size();i++){
+                    Edge e = graph[curr].get(i);
+                    q.add(e.dest);
+                }
+            }
+        }
+    }
+
+    //!  3     D   F   S     O(V+E)
+    public static void DFS(ArrayList<Edge>[] graph, int curr, boolean visited[]){
+        // 1 Visit Current
+        System.out.print(curr+" ");
+
+        visited[curr]= true;
+
+        for(int i=0;i<graph[curr].size();i++){
+            Edge e = graph[curr].get(i);
+            if(!visited[e.dest]){ // check if neighbour was visited or no
+                DFS(graph, e.dest, visited);
+            }
+        }
+    }
+
+    //!  4.  Has Path ?   O(V+E)
+    public static boolean hasPath(ArrayList<Edge>[] graph, int src, int dest, boolean visited[]){
+        // 1 If source is destination
+        if(src == dest){
+            return true;
+        }
+        visited[src] = true;
+        // 2 can neighbour take us to destination ?
+        for(int i = 0;i<graph[src].size();i++){
+            Edge e = graph[src].get(i);
+
+            if(!visited[e.dest] && hasPath(graph, e.dest, dest, visited)){
+                return true;
+            }
+        }
+        return false;
+   }
+
     public static void main(String args[]){
         
         // int V = 5;
@@ -110,18 +162,24 @@ public class G1raphsIntroAdjList {
         // }
     //! 1 ------------------------------------------------------------------------------
 
-    //* 2 ----------------------------------------------------------------------------
-        // int v = 7;
-        // ArrayList<Edge> graph[] = new ArrayList[v];
-        // createGraph(graph);
-        // BFS(graph);
-    //! 2 ---------------------------------------------------------------------------
-        //* 3 ----------------------------------------------------------------------------
         int v = 7;
         ArrayList<Edge> graph[] = new ArrayList[v];
         createGraph(graph);
-        BFS(graph);
-    //! 2 ----------------------------------------------------------------------------
-    }
+    
+    
+    //* 2 ----------------------------------------------------------------------------
+        // BFS(graph);
+    //! 2 ---------------------------------------------------------------------------
+    
+    
+    //* 3 ----------------------------------------------------------------------------
+        // DFS(graph, 0, new boolean[v]);
+    //! 3 ----------------------------------------------------------------------------
+       
+    
+    //* 4 ----------------------------------------------------------------------------
+        System.out.println(hasPath(graph, 0, 5, new boolean[v]));
+    //! 4-----------------------------------------------------------------------------
+}
 
 }
