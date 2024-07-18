@@ -4,9 +4,9 @@ import java.util.LinkedList;
 //!  B F S  Divided in two to also traveerse disjoint sets 
 //!  D F S  Divided in two to also traveerse disjoint sets 
 
-//!  1.  Detect Cycle ( For Undirected Graph)    O ( V+H )
-//!  2.  Bipartite Graph                         O ( V+H )
-//!  3.  Detect Cycle ( DIRECTED Graph )         O ( V+H )
+//!  1.  Detect Cycle ( For Undirected Graph)    O ( V+E )
+//!  2.  Bipartite Graph                         O ( V+E )
+//!  3.  Detect Cycle ( DIRECTED Graph )         O ( V+E )
 
 
 public class G2raphs {
@@ -87,7 +87,7 @@ public class G2raphs {
     
     }
 
-    //!  1.  Detect Cycle ( For Undirected Graph)    O(V+H)
+    //!  1.  Detect Cycle ( For Undirected Graph)    O(V+E)
     public static boolean isCycleUD(ArrayList<Edge>[] graph){
         boolean vis[] = new boolean[graph.length];
 
@@ -127,7 +127,7 @@ public class G2raphs {
     }
 
 
-    //!  2.  Bipartite Graph                         O ( V+H )
+    //!  2.  Bipartite Graph                         O ( V+E )
     public static void createGraph2(ArrayList<Edge>[] graph){
         for(int i=0;i<graph.length;i++){
             graph[i]=new ArrayList<>();
@@ -192,7 +192,7 @@ public class G2raphs {
     }
 
 
-    //!  3.  Detect Cycle ( DIRECTED Graph )         O ( V+H )
+    //!  3.  Detect Cycle ( DIRECTED Graph )         O ( V+E )
     public static void createGraph3(ArrayList<Edge> graph[]){
         for(int i=0;i<graph.length;i++){
             graph[i] = new ArrayList<>();
@@ -241,7 +241,7 @@ public class G2raphs {
         return false;
     }
     public static void main(String args[]){
-        //!  1.  Detect Cycle ( For Undirected Graph)    O ( V+H )
+        //!  1.  Detect Cycle ( For Undirected Graph)    O ( V+E )
         /*
                 0 ------ 3
                /|        |   
@@ -259,7 +259,7 @@ public class G2raphs {
         // System.out.println(isCycleUD(graph));
 
 
-        //!  2.  Bipartite Graph                         O ( V+H )
+        //!  2.  Bipartite Graph                         O ( V+E )
         /*
                0 ------ 2 
               /          \
@@ -277,11 +277,21 @@ public class G2raphs {
         // createGraph2(graph);
         // System.out.println(isBipartite(graph));
 
-
-        //!  3.  Detect Cycle ( DIRECTED Graph )         O ( V+H )
+                                                                   
+        //!  3.  Detect Cycle ( DIRECTED Graph )         O ( V+E ) 
+        /*                                                         
+             1 -----> 0 < --_                                    
+                     /      |
+                    /       |
+                   / CYCLE  | 
+            2 < - /         |
+            |____________-> 3
+         
+         
+         */
         int v = 4;
         ArrayList<Edge>[] graph = new ArrayList[v];
         createGraph(graph);
         System.out.println(isCycleD(graph));
-}
+    }
 }
