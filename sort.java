@@ -173,16 +173,211 @@ public class sort {
         return sum;
     }
     public static int fibo(int n){
-        if(n==0||n==1){
+        if(n==1 || n==0){
             return n;
         }
-        int fibo1 = fibo(n-1);
-        int fibo2 = fibo(n-2);
-        int fibo = fibo1+fibo2;
-        return fibo;
+        int ans = fibo(n-1)+fibo(n-2);
+        return ans;
     }
 
 
+    public static boolean sortedArr(int arr[], int i){
+        if(i==arr.length-1){
+            return true;
+        }
+        if(arr[i]>arr[i+1]){
+            return false;
+        }
+        return sortedArr(arr, i+1);
+    }
+    public static int lastOccurance(int arr[], int key,int i){
+        // int i=0;
+        if(i==arr.length-1){
+            return -1;
+        }
+        int isFound = lastOccurance(arr, key, i+1);
+        if(isFound==-1 && arr[i]==key){
+            return i;
+            
+        }
+        return isFound;
+    }
+
+    public static int xpown(int x, int n){
+        if(n==0){
+            return 1;
+        }
+        int halfp = xpown(x, n/2);
+        int halfPowSq = halfp*halfp;
+        if(n%2!=0){
+            halfPowSq = halfPowSq*x;
+        }
+        return halfPowSq;
+    }
+
+
+    public static void spiralMatrix(int arr[][]){
+        int sR = 0;
+        int sC = 0;
+        int eR = arr.length-1;
+        int eC = arr[0].length-1;
+
+        while(sC<=eC && sR<=eR){
+            // Top print
+            for(int i=sC;i<=eC;i++){
+                System.out.print(arr[sR][i]+" ");
+            }
+            //Right
+            for(int i=sR+1;i<=eR;i++){
+                System.out.print(arr[i][eC]+" ");
+            }
+            //Bottom
+            for(int i=eC-1;i>=sC;i--){
+                if(sR==eR){
+                    break;
+                }
+                System.out.print(arr[eR][i]+" ");
+            }
+            //Left
+            for(int i=eR-1;i>sR;i--){
+                if(sC==eC ){
+                    break;
+                }
+                System.out.print(arr[i][sC]+" ");
+            }
+            sR++;
+            sC++;
+            eR--;
+            eC--;
+        }
+
+
+
+        
+    }
+    public static int diagSum(int arr[][]){
+        int n = arr.length;
+        int sum = 0;
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i][i];
+            sum+=arr[i][n-i-1];
+        }
+        if(arr.length%2==0){
+            return sum;
+        }else{
+            return (sum - arr[arr.length/2][arr.length/2]);
+        }
+        // return sum;
+        
+    }
+
+
+    public static void stairCaseSearch(int arr[][], int key){
+        int i=0, j=arr[0].length-1;
+        while(i<arr.length && j>=0){
+            if(arr[i][j]==key){
+                System.out.println("Key found at : "+i+" , "+j);
+                break;
+            }else if(key<arr[i][j]){
+                j--;
+            }else{
+                i++;
+            }
+        }
+        System.out.println("Key not found.");
+    }
+
+    //  Merge OverLapping Interval
+    public static int[][] mergeIinterval(int arr[][]){
+        Arrays.sort(arr, (a,b) -> Integer.compare(a[0], b[0]));
+
+        List<int[]> merged = new ArrayList<>(); 
+        int prev[] = arr[0];
+
+        for(int i=1;i<arr.length;i++){
+            int[] interval = arr[i];
+            if(interval[0]<=prev[1]){
+                prev[1] = Math.max(prev[1], interval[1]);
+            }else{
+                merged.add(prev);
+                prev = interval;
+            }
+        }
+        merged.add(prev);
+        return merged.toArray(new int[merged.size()][]);
+    }
+
+    public static void combine2arrsort(int nums1[], int n, int nums2[], int m){
+        int ans[] = new int[m+n];
+        int i=0;
+        int j=0;
+        int k=0;
+        while(i<n && j<m){
+            if(nums1[i]<nums2[j]){
+                ans[k]=nums1[i];
+                i++;
+                
+            }else{
+                ans[k]=nums2[j];
+                j++;
+            }
+            k++;
+        }
+        while(i<n){
+            ans[k]=nums1[i];
+            i++;
+            k++;
+        }
+        while(j<m){
+            ans[k]=nums2[j];
+            k++;
+            j++;
+        }
+        printArray(ans);
+        return;
+    }
+
+    public static int sqqopt(int x,int n){
+        if(n==0){
+            return 1;
+        }
+
+        int halfp = sqqopt(x, n/2);
+        int halfPow = halfp*halfp;
+
+        if(n%2!=0){
+            halfPow=halfPow*x;
+        }
+        
+        return halfPow;
+    }
+
+
+    public static int totalWaysTILING(int n){
+        if(n==0||n==1){
+            return 1;
+        }
+        int fnm1 = totalWaysTILING(n-1);
+        int fnm2 = totalWaysTILING(n-2);
+        return fnm1+fnm2;
+    }
+
+    public static void removeDup(String str, int idx, StringBuilder ans, boolean map[]){
+
+        if(idx==str.length()){
+            System.out.print(ans);
+            return;
+        }
+
+        char currChar = str.charAt(idx);
+        if(map[currChar-'a']==true){
+            // means its duplicate
+            removeDup(str, idx+1, ans, map);
+        }else{
+            map[currChar-'a']=true;
+            removeDup(str, idx+1, ans.append(currChar), map);
+        }
+    }
     public static void main(String args[]){
         // int arr[] = {2,4,6,-2,33,-25};
         // int arr[] = {6,3,9,5,2,8};
@@ -209,7 +404,27 @@ public class sort {
         
         // printInc(10);
         // System.out.print(facto(10));
-         System.out.print(fibo(8));
-    
+        //  System.out.print(fibo(3));
+        // int arr[] = {1,2,3,8,2,4,5,8,6};
+        // System.out.println(sortedArr(arr, 0));
+        // System.out.println(lastOccurance(arr, 8, 0));
+        // System.out.println(xpown(2, 4));
+
+        // int arr[][] = {{1,2,3,0,1},{4,5,6,0,1},{7,8,9,0,1},{10,11,12,0,1},{13,14,15,16,1}};
+        // spiralMatrix(arr);
+        // System.out.println(diagSum(arr));
+        // stairCaseSearch(arr, 1);
+        // System.out.println(arr[0]);
+
+        // int nums1[] = {1,3,5,7,9};
+        // int nums2[] = {0,2,4,6,8};
+        // combine2arrsort(nums1, 5, nums2, 5); 
+        
+        // System.out.println(sqqopt(2, 5));
+
+        // System.out.println(totalWaysTILING(4));
+
+        String str = "kkaaransssinnhnhh";
+        removeDup(str, 0, new StringBuilder(""), new boolean[26]);
     }
 }
