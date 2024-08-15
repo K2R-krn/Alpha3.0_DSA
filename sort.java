@@ -378,6 +378,57 @@ public class sort {
             removeDup(str, idx+1, ans.append(currChar), map);
         }
     }
+
+    public static void printBin(int n, String str,int lastP){
+        if(n==0){
+            System.out.println(str);
+            return;
+        }
+        printBin(n-1, str+"0", 0);
+        if(lastP==0){
+            printBin(n-1, str+"1", 1);
+        }
+    }
+
+    public static int friendsPair(int n){
+        if(n==1 || n==2){
+            return n;
+        }
+        return friendsPair(n-1)+friendsPair(n-2)*(n-2);
+    }
+
+    //*  Return places of occurances of a number in an array using Recurssion 
+    public static void allOccurances(int arr[], int key,int idx){
+        if(idx==arr.length){
+            return;
+        }
+        if(arr[idx]==key){
+            System.out.print(idx+" ");
+        }
+        allOccurances(arr, key, idx+1);
+    }
+
+    //*  Returns words name for numbers   eg. 2002 = two zero zero two  ;  Given a condition that last digit wont be zero
+    public static String digits[] = {"zero","one", "two","three","four", "five","six","seven", "eight", "nine"};
+    public static void printDigits(int numbers){
+        if(numbers==0){
+            return;
+        }
+        int lastDigit = numbers%10;
+        printDigits(numbers/10);
+        System.out.print(digits[lastDigit]+" ");
+    }
+
+    //* Write a recursive funtion to calculate length of string
+    public static int lenofString(String str){
+        if(str.length()==0){
+            return 0;
+        }
+
+        return lenofString(str.substring(1)+1);
+    }
+
+
     public static void main(String args[]){
         // int arr[] = {2,4,6,-2,33,-25};
         // int arr[] = {6,3,9,5,2,8};
@@ -424,7 +475,17 @@ public class sort {
 
         // System.out.println(totalWaysTILING(4));
 
-        String str = "kkaaransssinnhnhh";
-        removeDup(str, 0, new StringBuilder(""), new boolean[26]);
+        // String str = "kkaaransssinnhnhh";
+        // removeDup(str, 0, new StringBuilder(""), new boolean[26]);
+        
+        // printBin(3, new String(""), 0);
+        // System.out.println(friendsPair(4));
+        // int arr[] = {1,4,2,3,1,3,2,4,2,3,3,3,45,4,2,3,4,5};
+        // allOccurances(arr, 3, 0);
+        printDigits(2002);
+
+
+
+
     }
 }
