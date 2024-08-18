@@ -429,6 +429,263 @@ public class sort {
     }
 
 
+    //*  Merge Sort
+    public static void mS(int arr[], int si, int ei){
+        if(si>=ei){
+            return;
+        }
+        int mid = si+(ei-si)/2;
+        mS(arr, si, mid);
+        mS(arr, mid+1, ei);
+        mergg(arr,si,mid,ei);
+    }
+    public static void mergg(int arr[], int si,int mid,int ei){
+        int temp[] = new int[ei-si+1];
+        int i = si;
+        int j = mid+1;
+        int k = 0;
+        while(i<=mid && j<=ei){
+            if(arr[i]<arr[j]){
+                temp[k++]=arr[i++];
+            }else{
+                temp[k++]=arr[j++];
+            }
+        }
+        while(i<=mid){
+            temp[k++]=arr[i++];
+        }
+        while(j<=ei){
+            temp[k++]=arr[j++];
+        }
+        for(k=0,i=si;k<temp.length;i++,k++){
+            arr[i]=temp[k];
+        }
+    }
+
+
+    //*   QUICK  SORT   */
+    public static void qs(int[] arr, int si, int ei){
+        if(si>=ei){
+            return;
+        }
+        int pivotidx = partition(arr, si, ei);
+        qs(arr, si, pivotidx-1);
+        qs(arr, pivotidx+1, ei);
+    }
+    public static int partition(int[] arr, int si, int ei){
+        int pivot = arr[ei];
+        int i = si-1;
+        for(int j=si;j<ei;j++){
+            if(arr[j]<=pivot){
+                i++;
+                int temp = arr[j];
+                arr[j] = arr[i];
+                arr[i] = temp;
+            }
+        }
+
+        i++;
+        int temp = pivot;
+        arr[ei] = arr[i];
+        arr[i] = temp;
+        return i;
+    }
+
+    //*   Search In SORTED Rotated Array
+    public static int searchOnsortedRotated(int arr[], int si, int ei, int target){
+        if(si>ei){
+            return -1;
+        }
+        int mid = si+(ei-si)/2;
+        if(arr[mid]==target){
+            return mid;
+        }
+
+        // Now if mid is on L1
+        if(arr[si]<=arr[mid]){
+            // 2 cases
+            if(arr[si]<=target && target<=arr[mid]){
+                return searchOnsortedRotated(arr, si, mid-1, target);
+            }else{
+                return searchOnsortedRotated(arr, mid+1, ei, target);
+            }
+        }else{
+            if(arr[mid]<=target && target<=arr[ei]){
+                return searchOnsortedRotated(arr, mid+1, ei, target);
+            }else{
+                searchOnsortedRotated(arr, si, mid-1, target);
+            }
+        }
+        return -1;
+    }
+
+
+    //* B A C K T R A C K I N G
+
+    public static void changArr(int arr[], int i, int val){
+        if(i==arr.length){    
+            printArray(arr);
+            return;
+        }
+
+        arr[i] = val;
+        changArr(arr, i+1, val+1);
+    
+        arr[i] = arr[i]-2;
+    
+    }
+
+    //*   Subsets */
+    public static void findSubset(String str, int i, String ans){
+        //bc
+        if(i==str.length()){
+            if(ans.length()==0){
+                System.out.println("null");
+            }else{
+                System.out.println(ans);
+            }
+            return;
+        }
+        //rec
+        findSubset(str, i+1, ans+str.charAt(i));
+        findSubset(str, i+1, ans);
+    } 
+
+    public static void perMutations(String str, String ans){
+        //bc
+        if(str.length()==0){
+            System.out.println(ans);
+            return;
+        }
+        //rec
+        for(int i=0;i<str.length();i++){
+            char curr = str.charAt(i);
+            // "abcde"     =>   "ab" + "de" = "abde"  c removed,,  uske pehle ka taken and uske baad ka taken and combined
+            String newStr = str.substring(0,i) + str.substring(i+1);
+            perMutations(newStr, ans+curr);
+        }
+    }
+    
+    public static void multiples(int a, int k){
+        if(k==0){
+            return;
+        }
+        multiples(a, k-1);
+        System.out.print(a*k+" ");
+    }
+    public static int ansans(int n){
+        //bc
+        if(n==0) return 0;
+        //
+        if(n%2==0){
+            return ansans(n-1)-n;
+        }else{
+            return ansans(n-1)+n;
+        }
+    }
+
+    public static int maxAarray(int arr[] , int idx){
+        if(idx==arr.length-1){
+            return arr[idx];
+        }
+        return Math.max(maxAarray(arr, idx+1), arr[idx]);
+    }
+    public static int sumofArray(int arr[], int i){
+        if(i==arr.length){
+            return 0;
+        }
+        return arr[i]+sumofArray(arr, i+1);
+    }
+    public static ArrayList<Integer> exist(int arr[], int i, int target,ArrayList<Integer> ans ){
+        if(i==arr.length){
+            return ans;
+        }
+        if(arr[i]==target){
+            ans.add(i);
+        }
+        exist(arr, i+1, target,ans);
+        // else{  
+        //     if(exist(arr, i+1, target)==true){
+        //         return true;
+        //     }else{
+        //         return false;
+        //     }
+        // }
+        return ans;
+    }
+
+    // *  Remove A from a string
+    // * M1
+    static String removeA(String str, int i){
+        if(i==str.length()){
+            return "";  
+        }
+        String ans = removeA(str, i+1);
+        char currChar = str.charAt(i);
+        if(currChar!='a'){
+            return currChar+ans;
+        }else{
+            return ans;
+        }
+    }
+    // * m2
+    static String removeA2(String str){
+        if(str.length()==0){
+            return "";  
+        }
+        String ans = removeA2(str.substring(1));
+        char currChar = str.charAt(0);
+        if(currChar!='a'){
+            return currChar+ans;
+        }else{
+            return ans;
+        }    
+    }
+
+    // *   REVERSE STRING 
+    public static String reverseStr(String str, int i){
+        if(i==str.length()){
+            return "";
+        }
+        String smans = reverseStr(str, i+1);
+        return smans+str.charAt(i);
+    }
+    // * Pallindrome String
+    public static boolean pallindrome(String str, int i, int j){
+        if(i>=j){
+            return true;
+        }
+        return (str.charAt(i) == str.charAt(j) && pallindrome(str, i+1, j-1));
+    }
+
+    // *  Subsequences
+    static void subSeq(String str, int i, String ans){
+        if(i==str.length()){
+            if(ans.length()==0){
+                System.out.println("null");
+            } else{
+                System.out.println(ans);
+            }
+            return;
+        }
+        subSeq(str, i+1, ans+str.charAt(i));
+        subSeq(str, i+1, ans);
+    }
+
+    // *  Sum of all subsets
+    public static void sumofSubsets(int arr[], int n, int i, int currSubsetSum){
+
+        if(i>arr.length-1){
+            System.out.println(currSubsetSum);
+            return;
+        }
+
+        // curr idx + sum
+        sumofSubsets(arr, n, i+1, currSubsetSum+arr[i]);
+        // curr sum
+        sumofSubsets(arr, n, i+1, currSubsetSum);
+
+    }
     public static void main(String args[]){
         // int arr[] = {2,4,6,-2,33,-25};
         // int arr[] = {6,3,9,5,2,8};
@@ -482,10 +739,49 @@ public class sort {
         // System.out.println(friendsPair(4));
         // int arr[] = {1,4,2,3,1,3,2,4,2,3,3,3,45,4,2,3,4,5};
         // allOccurances(arr, 3, 0);
-        printDigits(2002);
+        // printDigits(2002);
+
+        // int arr[] = {1,4,8,2,7,5,6,3,9};
+        // mS(arr, 0, 8);
+        // qs(arr, 0, 8);
+        // printArray(arr);
+
+        // int arr[] = {4,5,6,7,0,1,2,3};
+        // System.out.println(searchOnsortedRotated(arr, 0, 7, 2));
 
 
+        // int arr[] = new int[5];
+        // changArr(arr,0,1);
+        // printArray(arr);
 
+        // findSubset("ab", 0, "");
 
+        // perMutations("abc", "");
+        // multiples(5, 4);
+        // System.out.println(ansans(5));
+        // int arr[] = {1,4,84,6,9,77, 84,3,5,84};
+        // System.out.println(maxAarray(arr, 0));
+        // System.out.println(sumofArray(arr, 0));
+        // System.out.println(exist(arr, 0, 84));
+        
+        // ArrayList<Integer> ans = new ArrayList<>();
+        // exist(arr, 0, 84,ans);
+        // for(int i=0;i<ans.size();i++){
+        //     System.out.print(ans.get(i)+" ");
+        // }
+
+        // String str = new String("Karansinh Rathod");
+        // System.out.println(removeA2(str));
+        // System.out.println(reverseStr(str,0));
+
+        // String str = new String("LEVEL");
+        // System.out.println(pallindrome(str, 0, str.length()-1));
+
+        // String str = new String("abc");
+        // String ans = new String("");
+        // subSeq(str, 0, ans);
+
+        int arr[] = {2,4,5};
+        sumofSubsets(arr, 3, 0, 0);
     }
 }
