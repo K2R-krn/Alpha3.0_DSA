@@ -5,7 +5,9 @@ public class dpdp {
     //* 1 a.  Count Ways - Stairs - Memoization - O(n)
     //* 1 b.  Count Ways - Stairs - Tabulation - O(n)
 
-    //* 2.  0-1 Knapsack 
+    //* 2.  0-1 Knapsack   recursion    - O(2^n)   
+    //* 2 a.  0-1 Knapsack Memoization  - O( i * W )
+
 
 
     // *    FIBONACCI
@@ -53,15 +55,72 @@ public class dpdp {
         return dp[n];
     }
 
+    //* 2 a.  0-1 Knapsack Recursion O(2^n)
+    public static int knapSack01(int[] wt, int[] val, int i, int W){
+        if(W<=0 || i==0) return 0;
+
+        if(wt[i-1]<=W){
+            // include
+            int ans1 = val[i-1]+knapSack01(wt, val, i-1, W-wt[i-1]);
+
+            //exclude
+            int ans2 = knapSack01(wt, val, i-1, W);
+            
+            return Math.max(ans1, ans2);
+        }
+        else{
+            return knapSack01(wt, val, i-1, W);
+        }
+    }
+
+        
+    //* 2 a.  0-1 Knapsack Memoization O( i * W )
+    public static int knapSack01MEMO(int[] wt, int[] val, int i, int W, int[][] dp){
+        if(W<=0 || i==0) return 0;
+
+        if(dp[i][W]!=-1){
+            return dp[i][W];
+        }
+
+        if(wt[i-1]<=W){
+            // include
+            int ans1 = val[i-1]+knapSack01MEMO(wt, val, i-1, W-wt[i-1],dp);
+
+            //exclude
+            int ans2 = knapSack01MEMO(wt, val, i-1, W,dp);
+            
+            dp[i][W] =  Math.max(ans1, ans2);
+            return dp[i][W];
+        }
+        else{
+            dp[i][W] = knapSack01MEMO(wt, val, i-1, W,dp);
+            return dp[i][W];    
+        }
+    }
+
     public static void main(String args[]){
         // int n = 5; 
         // int f[] = new int[n+1];
         // System.out.println(fib(n, f));
 
-        int n = 5;
-        int ways[] = new int[n+1];
-        System.out.println(countWaysStairsMemo(n, ways));
-        System.out.println(countWaysStairsTAB(n));
+        // int n = 5;
+        // int ways[] = new int[n+1];
+        // System.out.println(countWaysStairsMemo(n, ways));
+        // System.out.println(countWaysStairsTAB(n));
+    
+        int wt[] = {2,5,1,3,4};
+        int val[] = {15, 14, 10, 45,30};
+        int W = 7;
+        // System.out.println(knapSack01(wt, val, 5, W));
+    
+        int dp[][] = new int[val.length+1][W+1];
+        for(int i=0;i<dp.length;i++){
+            for(int j=0;j<dp[0].length;j++){
+                dp[i][j] = -1;
+            }
+        }
+        System.out.println(knapSack01MEMO(wt, val, 5, W, dp));
+
     }
 }
   
