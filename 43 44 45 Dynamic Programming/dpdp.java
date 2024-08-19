@@ -74,7 +74,7 @@ public class dpdp {
     }
 
         
-    //* 2 a.  0-1 Knapsack Memoization O( i * W )
+    //* 2 a.  0-1 Knapsack Memoization O ( i * W )
     public static int knapSack01MEMO(int[] wt, int[] val, int i, int W, int[][] dp){
         if(W<=0 || i==0) return 0;
 
@@ -98,6 +98,41 @@ public class dpdp {
         }
     }
 
+    //* 2 b.  0-1 Knapsack Tabulation O ( i * W )
+    public static int knapSack01TABU(int[] wt, int[] val, int W){
+        int n = val.length;
+        int dp[][] = new int[n+1][W+1];
+        for(int i = 0;i<dp.length;i++){
+            dp[i][0] = 0;
+        }
+        for(int j = 0;j<dp[0].length;j++){
+            dp[0][j] = 0;
+        }
+
+        for(int i=1;i<n+1;i++){  // Represent how many items allowed
+            for(int j =1;j<W+1;j++){ // Represent How many kg s allowed
+
+                int v = val[i-1];
+                int w = wt[i-1];
+                
+                if(w<=j){ // valid case
+                   // Include profit 
+                   int includeProfit = v+dp[i-1][j-w];
+                   //exclude case
+                   int excProfit = dp[i-1][w];
+                   dp[i][j] = Math.max(includeProfit, excProfit); 
+                }
+                else{  // invalid case
+                    int excludeP = dp[i-1][j];
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][W];
+
+    }
+
+
     public static void main(String args[]){
         // int n = 5; 
         // int f[] = new int[n+1];
@@ -119,7 +154,10 @@ public class dpdp {
                 dp[i][j] = -1;
             }
         }
-        System.out.println(knapSack01MEMO(wt, val, 5, W, dp));
+        // System.out.println(knapSack01MEMO(wt, val, 5, W, dp));
+        // System.out.println(knapSack01TABU(wt, val, W));
+
+        
 
     }
 }
