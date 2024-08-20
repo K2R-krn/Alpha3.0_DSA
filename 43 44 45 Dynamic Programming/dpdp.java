@@ -133,6 +133,31 @@ public class dpdp {
     }
 
 
+    public static boolean targetSum(int arr[], int sum){
+        int n = arr.length;
+        boolean dp[] = new boolean[n+1][sum+1];
+        for(int i = 0;i<n+1;i++){ // i is items and j is target sum
+            dp[i][0] = 0;
+        }
+
+        // tabulation code 
+        for(int =1;i<n+1;i++){
+            for(int j=1;j<sum+1;j++){
+                int v = arr[i-1];
+                // include
+                if(v<=j && dp[i-1][j-v] == true){ // v<=j checks can we add it in target sum in subset and 
+                    dp[i][j] = true;
+                }
+                //exclude
+                else if(dp[i-1][j] == true){
+                    dp[i][j] = true;
+                }
+            }
+        }
+        return dp[n][sum];
+    }
+
+
     public static void main(String args[]){
         // int n = 5; 
         // int f[] = new int[n+1];
@@ -155,9 +180,9 @@ public class dpdp {
             }
         }
         // System.out.println(knapSack01MEMO(wt, val, 5, W, dp));
-        // System.out.println(knapSack01TABU(wt, val, W));
+        // System.out.println(knapSack01TABU(wt, val, cdW));
 
-        
+
 
     }
 }
