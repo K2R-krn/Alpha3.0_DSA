@@ -686,6 +686,82 @@ public class sort {
         sumofSubsets(arr, n, i+1, currSubsetSum);
 
     }
+
+
+
+
+    public static int findFibo(int n){
+        
+        //  M  E  M  O  I  Z  A  T  I  O  N
+
+        // if(n==0||n==1){
+        //     return n;
+        // }
+        // if(arr[n]!=0){
+        //     return arr[n];
+        // }
+        // arr[n] = findFibo(n-2, arr)+findFibo(n-1,arr); 
+        // return arr[n];
+
+        //  T  A  B  U  L  A  T  I  O  N
+        
+        int dp[] = new int[n+1];
+        dp[0] = 0;
+        dp[1] = 1;
+        for(int i=2;i<=n;i++){
+            dp[i] = dp[i-1]+dp[i-2];
+        }
+        return dp[n];
+
+    }
+
+
+    public static int knaps01(int[] wt, int[] val, int W, int i,int dp[][]){
+        if(W<=0 || i==0) return 0;
+        if(dp[i][W]!=-1) return dp[i][W];
+        if(wt[i-1] <= W){
+            // Now 2 options we can include or not include
+            int a = knaps01(wt, val, W-wt[i-1], i-1,dp)+val[i-1];
+            int b = knaps01(wt, val, W, i-1,dp);
+            dp[i][W] = Math.max(a, b);
+            
+        }
+        else{
+            dp[i][W] = knaps01(wt, val, W, i-1,dp);
+            
+        }
+        return dp[i][W];
+    }
+    public static int knapTab(int[] wt, int[] val, int W){
+        int n = val.length;
+        int[][] dp = new int[n+1][W+1];
+        
+        for(int i=0;i<dp.length;i++){
+            dp[i][0] = 0;
+        }
+        for(int i=0;i<dp[0].length;i++){
+            dp[0][i] = 0;
+        }
+
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<W+1;j++){
+                int v = val[i-1];
+                int w = wt[i-1];
+                if(w<=j){
+                    int excludeProfit = v+dp[i-1][j-w];
+                    int includeProf = dp[i-1][w];
+                    dp[i][j] = Math.max(excludeProfit, includeProf);
+                }else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][W];
+    }
+
+
+
+
     public static void main(String args[]){
         // int arr[] = {2,4,6,-2,33,-25};
         // int arr[] = {6,3,9,5,2,8};
@@ -781,7 +857,21 @@ public class sort {
         // String ans = new String("");
         // subSeq(str, 0, ans);
 
-        int arr[] = {2,4,5};
-        sumofSubsets(arr, 3, 0, 0);
+        // int arr[] = {2,4,5};
+        // sumofSubsets(arr, 3, 0, 0);
+
+        // int[] arr = new int[100];
+        // System.out.println(findFibo(9));
+
+        int wt[] = {2,5,1,3,4};
+        int val[] = {15,14,10,45,30};
+        int W = 7;
+        int[][] dp = new int[val.length + 1][W + 1]; // Correct size of dp table
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        System.out.println(knaps01(wt,val ,W,wt.length, dp));
+        System.out.println(knapTab(wt,val ,W));
+
     }
 }
