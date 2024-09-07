@@ -19,6 +19,11 @@ public class dpdp {
     //* 7 c.    TABULATION LCS              - O( n * m ) 
     //* 8     Longest Common SubString      - O( n * m ) 
     //* 9     Longest Increasing SubString  - O( n * m ) 
+    //* 10    Edit Distance                 - O( n * m ) 
+    //* 11    String Conversion             - O( n * m ) ( Number of deletions and insertions )
+    //* 12    WildCard Matching             - O( n * m )
+    //* 13    Catlan s Number               - O( n * m )
+
 
 
     // *    FIBONACCI
@@ -376,7 +381,7 @@ public class dpdp {
                     dp[i][j] = dp[i-1][j-1]+1;
                 }else{
                     int ans1 = dp[i-1][j];
-                    int ans2 = dp[i][j-1];
+                    int  ans2 = dp[i][j-1];
 
                     dp[i][j]= Math.max(ans1, ans2);
                 }
@@ -384,7 +389,131 @@ public class dpdp {
         }
         return dp[n][m];
     }
+
+    //* 10    Edit Distance                 - O( n * m ) 
+    public static int EditDistance(String str1, String str2){
+        int n = str1.length();
+        int m = str2.length();
+        int dp[][] = new int[n+1][m+1];
+        
+        // initialize
+        for(int i = 0;i<n+1;i++){
+            for(int j = 0;j<m+1;j++){
+                if(i==0){
+                    dp[i][j] = j;
+                }else if(j==0){
+                    dp[i][j] = i;
+                }
+            }
+        }
+
+        // Logic Filling the table BOTTOM UP 
+        for(int i = 1;i<n+1;i++){
+            for(int j = 1;j<m+1;j++){
+                if(str1.charAt(i-1)==str2.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1];
+                }else{
+                    int add = dp[i][j-1]+1;
+                    int delete = dp[i-1][j]+1;
+                    int replace = dp[i-1][j-1]+1;
+                    dp[i][j] = Math.min(add, Math.min(replace, delete));
+                }   
+            }
+        }
+        return dp[n][m];
+    }
+
+    //* 11    String Conversion             - O( n * m ) ( Number of deletions and insertions )
+    public static void strConversion(String str1, String str2){
+        int n = str1.length();
+        int m = str2.length();
+        
+        int lcs = lcs3tabu(str1, str2);
+        int delOp = n-lcs;
+        int insOp = m-lcs;
+        System.out.println(delOp);
+        System.out.println(insOp);
+
+    }
+
+    //* 12    WildCard Matching            - O( n * m )
+    public static boolean wildCard(String s, String p){
+
+        int n = s.length();
+        int m = p.length();
+
+        boolean dp[][] = new boolean[n+1][m+1];
+        dp[0][0] = true;
+
+        // Initialize
+        for(int i = 1;i<n+1;i++){
+            dp[i][0] = false;
+        }
+        for(int j=1;j<m+1;j++){
+            if(p.charAt(j-1)=='*'){
+                dp[0][j] = dp[0][j-1];
+            }
+        }
+
+        // BOTTOM UP FILLING NOW
+        for(int i = 1 ;i<n+1;i++){
+            for(int j = 1;j<m+1;j++){
+                // C1  if ith char = jth char  and jth char = ?
+                if(s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '?'){
+                    dp[i][j] = dp[i-1][j-1];
+                }else if(p.charAt(j-1)=='*'){
+                    dp[i][j] = dp[i-1][j] || dp[i][j-1];
+                }else{
+                    dp[i][j] = false;
+                }
+            }
+        }
+        return dp[n][m];
+    }
+
+    //* 13    Catlan s Number            - O( n * m )
+
+    // Tabu
+    public static int catlanTabu(int n){
+        
+        int dp[] = new int[n+1];
+        dp[0] =1;
+        dp[1] =1;
+
+        for(int i = 2;i<=n;i++){
+            for(int j = 0;j<i;j++){
+                dp[i] += dp[j]*dp[i-j-1];
+            }
+        }
+        return dp[n];
+    }
     
+    // Memoization
+    public static int catlanMemo(int n, int dp[] ){
+        if(n==0 || n==1){
+            return 1;
+        }
+        if(dp[n] != -1){
+            return dp[n];
+        }
+        int ans = 0; // is basically catlan of n
+        for(int i = 0;i<=n-1;i++){
+            ans+=catlanMemo(i,dp)*catlanMemo(n-i-1,dp);
+        }
+        return dp[n] = ans;
+    }
+    
+    // BRUTE FORCE   really high tc stack overflow
+    public static int catlan(int n ){
+        if(n==0 || n==1){
+            return 1;
+        }
+        int ans = 0; // is basically catlan of n
+        for(int i = 0;i<=n-1;i++){
+            ans+=catlan(i)*catlan(n-i-1);
+        }
+        return ans;
+    }
 
     public static void main(String args[]){
         // int n = 5; 
@@ -457,6 +586,31 @@ public class dpdp {
         //^ 9
         // int arr[] = {50, 3, 10, 7, 40, 80};
         // System.out.println(longestIncSubS_LIS(arr));
+
+        //^ 10
+        // String str1 = "intention";
+        // String str2 = "execution";
+        // System.out.println(EditDistance(str1, str2));
+
+        //^ 11
+        // String str1 = "abcdef";
+        // String str2 = "aceg";
+        // strConversion(str1, str2);
+    
+        //^ 12
+        // String str1 = "baaabab";
+        // String str2 = "*****ba*****ab";
+        // System.out.println(wildCard(str1, str2));
+
+        //^ 13
+        int dp[] = new int[6];
+        for(int i=0;i<dp.length;i++){
+            dp[i] = -1;
+        }
+        System.out.println(catlan(5));  
+        System.out.println(catlanMemo(5, dp));  
+        System.out.println(catlanTabu(5));  
+    
     }
 }
   
