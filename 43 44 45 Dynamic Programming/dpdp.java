@@ -473,7 +473,7 @@ public class dpdp {
 
     //* 13    Catlan s Number            - O( n * m )
 
-    // Tabu
+    // TABULATION
     public static int catlanTabu(int n){
         
         int dp[] = new int[n+1];
@@ -497,7 +497,7 @@ public class dpdp {
             return dp[n];
         }
         int ans = 0; // is basically catlan of n
-        for(int i = 0;i<=n-1;i++){
+        for(int i = 0;i<n;i++){
             ans+=catlanMemo(i,dp)*catlanMemo(n-i-1,dp);
         }
         return dp[n] = ans;
