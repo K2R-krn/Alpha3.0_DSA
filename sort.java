@@ -761,7 +761,36 @@ public class sort {
 
 
 
+    public static int knapsack01T(int wt[], int val[], int W){
 
+        int n = val.length;
+        int dp[][] = new int[n+1][W+1];
+
+        // Initialize it and give it a meaning
+        for(int i=0;i<dp.length;i++){
+            dp[i][0] = 0;            
+        }
+        for(int j=0;j<dp[0].length;j++){
+            dp[0][j] = 0;
+        }
+
+        // Start filling it bottum up  // Small problem first and then going to biffer problem
+        for(int i=1 ; i<dp.length;i++){
+            for(int j=1 ; j<dp[0].length;j++){
+                int v = val[i-1];
+                int w = wt[i-1];
+                if(w<=j){
+                    int incP = v+dp[i-1][j-w];
+                    int excP = dp[i-1][j];
+                    dp[i][j] = Math.max(incP, excP);
+                }
+                else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][W];
+    }
     public static void main(String args[]){
         // int arr[] = {2,4,6,-2,33,-25};
         // int arr[] = {6,3,9,5,2,8};
@@ -866,12 +895,13 @@ public class sort {
         int wt[] = {2,5,1,3,4};
         int val[] = {15,14,10,45,30};
         int W = 7;
-        int[][] dp = new int[val.length + 1][W + 1]; // Correct size of dp table
-        for (int[] row : dp) {
-            Arrays.fill(row, -1);
-        }
-        System.out.println(knaps01(wt,val ,W,wt.length, dp));
-        System.out.println(knapTab(wt,val ,W));
+        // int[][] dp = new int[val.length + 1][W + 1]; // Correct size of dp table
+        // for (int[] row : dp) {
+        //     Arrays.fill(row, -1);
+        // }
+        // System.out.println(knaps01(wt,val ,W,wt.length, dp));
+        // System.out.println(knapTab(wt,val ,W));
 
+        System.out.println(knapsack01T(wt, val, W));
     }
 }
