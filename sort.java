@@ -791,6 +791,29 @@ public class sort {
         }
         return dp[n][W];
     }
+
+
+    public static boolean targetSum(int arr[], int sum){
+        int n = arr.length;
+        boolean dp[][] = new boolean[n+1][sum+1];
+
+        for(int i = 0;i<n+1;i++){
+            dp[i][0] = true;
+        }
+
+        for(int i = 1;i<n+1;i++){
+            for(int j = 1;j<sum+1;j++){
+                int v = arr[i-1];               
+                // Check valid condition first
+                if(arr[i-1]<=j && dp[i-1][j-v]==true){
+                    dp[i][j] = true;
+                }else if(dp[i-1][j]==true){
+                    dp[i][j] = true;
+                }
+            }
+        }
+        return dp[n][sum];
+    }
     public static void main(String args[]){
         // int arr[] = {2,4,6,-2,33,-25};
         // int arr[] = {6,3,9,5,2,8};
@@ -902,6 +925,9 @@ public class sort {
         // System.out.println(knaps01(wt,val ,W,wt.length, dp));
         // System.out.println(knapTab(wt,val ,W));
 
-        System.out.println(knapsack01T(wt, val, W));
+        // System.out.println(knapsack01T(wt, val, W));
+        int arr[] = {4,2,7,3};
+        int n = 10;
+        System.out.println(targetSum(arr, n));
     }
 }
