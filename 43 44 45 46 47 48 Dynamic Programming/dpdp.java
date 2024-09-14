@@ -23,6 +23,14 @@ public class dpdp {
     //* 11    String Conversion             - O( n * m ) ( Number of deletions and insertions )
     //* 12    WildCard Matching             - O( n * m )
     //* 13    Catlan s Number               - O( n * m )
+    //* 14    Matrix Chain Multiplication   
+       
+    //* 15    Minimum Partitioning /  
+    //*       Minimum Subset Sum Difference  /  
+    //*       Partitioning Subset           - O ( n * w )
+    //* 16    Minimum Array Jumps           - O ( n * w )
+
+
 
 
 
@@ -38,7 +46,23 @@ public class dpdp {
         return f[n];
     }
 
-    //* 1 a. Count Ways - Stairs - Memoization - O(n)
+    //* 1 a. Count Ways - Stairs  - O(n)
+        
+        //Tabu
+    public static int countWaysStairsTAB(int n){
+        int[] dp = new int[n+1];
+        dp[0] = 1;
+        
+        for(int i=1;i<=n;i++){
+            if(i == 1){
+                dp[i] = dp[i-1]+0;
+            }else{
+                dp[i] = dp[i-1]+dp[i-2];
+            }
+        }
+        return dp[n];
+    }
+        // MEMO
     public static int countWaysStairsMemo(int n, int[] ways){
         if(n==0){
             return 1;
@@ -55,42 +79,46 @@ public class dpdp {
         return ans;
         
     }
+    
 
-    //* 1 b. Count Ways - Stairs - Tabulation - O(n)
-    public static int countWaysStairsTAB(int n){
-        int[] dp = new int[n+1];
-        dp[0] = 1;
-        
-        for(int i=1;i<=n;i++){
-            if(i == 1){
-                dp[i] = dp[i-1]+0;
-            }else{
-                dp[i] = dp[i-1]+dp[i-2];
+    //* 2 a.  0-1 Knapsack   - Tabu/MemoO  - ( i * W )   /   REC  - O(2^n)
+
+        // TABU     O ( i * W )
+        public static int knapSack01TABU(int[] wt, int[] val, int W){
+            int n = val.length;
+            int dp[][] = new int[n+1][W+1];
+            for(int i = 0,j = 0;i<dp.length && j<dp[0].length;i++,j++){
+                dp[i][0] = 0;
+                dp[0][j] = 0;
             }
+            // for(int j = 0;j<dp[0].length;j++){
+            //     dp[0][j] = 0;
+            // }
+    
+            for(int i=1;i<n+1;i++){  // Represent how many items allowed
+                for(int j =1;j<W+1;j++){ // Represent How many kg s allowed
+    
+                    int v = val[i-1];
+                    int w = wt[i-1];
+                    
+                    if(w<=j){ // valid case
+                       // Include profit 
+                       int includeProfit = v+dp[i-1][j-w];
+                       //exclude case
+                       int excProfit = dp[i-1][w];
+                       dp[i][j] = Math.max(includeProfit, excProfit); 
+                    }
+                    else{  // invalid case
+                        int excludeP = dp[i-1][j];
+                        dp[i][j] = dp[i-1][j];
+                    }
+                }
+            }
+            return dp[n][W];
+    
         }
-        return dp[n];
-    }
 
-    //* 2 a.  0-1 Knapsack Recursion O(2^n)
-    public static int knapSack01(int[] wt, int[] val, int i, int W){
-        if(W<=0 || i==0) return 0;
-
-        if(wt[i-1]<=W){
-            // include
-            int ans1 = val[i-1]+knapSack01(wt, val, i-1, W-wt[i-1]);
-
-            //exclude
-            int ans2 = knapSack01(wt, val, i-1, W);
-            
-            return Math.max(ans1, ans2);
-        }
-        else{
-            return knapSack01(wt, val, i-1, W);
-        }
-    }
-
-        
-    //* 2 a.  0-1 Knapsack Memoization O ( i * W )
+        // MEMO         O ( i * W )
     public static int knapSack01MEMO(int[] wt, int[] val, int i, int W, int[][] dp){
         if(W<=0 || i==0) return 0;
 
@@ -114,40 +142,24 @@ public class dpdp {
         }
     }
 
-    //* 2 b.  0-1 Knapsack Tabulation O ( i * W )
-    public static int knapSack01TABU(int[] wt, int[] val, int W){
-        int n = val.length;
-        int dp[][] = new int[n+1][W+1];
-        for(int i = 0,j = 0;i<dp.length && j<dp[0].length;i++,j++){
-            dp[i][0] = 0;
-            dp[0][j] = 0;
+        // REC
+    public static int knapSack01(int[] wt, int[] val, int i, int W){
+        if(W<=0 || i==0) return 0;
+
+        if(wt[i-1]<=W){
+            // include
+            int ans1 = val[i-1]+knapSack01(wt, val, i-1, W-wt[i-1]);
+
+            //exclude
+            int ans2 = knapSack01(wt, val, i-1, W);
+            
+            return Math.max(ans1, ans2);
         }
-        // for(int j = 0;j<dp[0].length;j++){
-        //     dp[0][j] = 0;
-        // }
-
-        for(int i=1;i<n+1;i++){  // Represent how many items allowed
-            for(int j =1;j<W+1;j++){ // Represent How many kg s allowed
-
-                int v = val[i-1];
-                int w = wt[i-1];
-                
-                if(w<=j){ // valid case
-                   // Include profit 
-                   int includeProfit = v+dp[i-1][j-w];
-                   //exclude case
-                   int excProfit = dp[i-1][w];
-                   dp[i][j] = Math.max(includeProfit, excProfit); 
-                }
-                else{  // invalid case
-                    int excludeP = dp[i-1][j];
-                    dp[i][j] = dp[i-1][j];
-                }
-            }
+        else{
+            return knapSack01(wt, val, i-1, W);
         }
-        return dp[n][W];
-
     }
+    
 
     //* 3  .  Target Sum  Tabulation O ( i * W )
     public static boolean targetSum(int arr[], int sum){
@@ -590,7 +602,7 @@ public class dpdp {
     }
 
 
-    //* 14    Minimum Partitioning /  Minimum Subset Sum Difference  /  Partitioning Subset   O ( n * w )
+    //* 15    Minimum Partitioning /  Minimum Subset Sum Difference  /  Partitioning Subset   O ( n * w )
     public static int minPart(int arr[]){
         int n = arr.length;
         int sum = 0;
@@ -621,7 +633,7 @@ public class dpdp {
     }      
 
 
-    //* 15    Minimum Array Jumps   O ( n * w )
+    //* 16    Minimum Array Jumps   O ( n * w )
     public static int minJumps(int arr[]){
         int n = arr.length;
         int dp[] = new int[n];
