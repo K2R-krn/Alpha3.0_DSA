@@ -12,7 +12,7 @@ public class b_heaps {
             int par = (x-1)/2;   // parent index
 
             while(arr.get(x) < arr.get(par)){ // This will run for log(n) times as it is a tree   // As worst case me log n parents hote hai so TC - O ( logn )
-                // Swap
+                // Swap 
                 int temp = arr.get(x);
                 arr.set(x, arr.get(par));
                 arr.set(par, temp);
@@ -20,8 +20,6 @@ public class b_heaps {
                 x = par;
                 par = (x-1)/2;
             }  
-
-        
         }
 
         //^ 2 Peek in heap
@@ -71,7 +69,49 @@ public class b_heaps {
             return arr.size() == 0;
         }
 
+        //chodiya      - Rajan Kumar Jha  // Maksood    / So. Amit 
+        
+    }
 
+
+    //*  HEAPSORT
+    public static void heapSort(int arr[]){
+        // Step 1 - Build MaxHeap
+        int n = arr.length;
+        for(int i = n/2; i>=0; i--){
+            heapifyy(arr, i, n);
+        }
+        // Step 2 - Push largest element at end
+        for(int i = n-1;i>0;i--){
+            // Swap   / swapped first with last index
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            
+            heapifyy(arr, 0, i);
+        }
+    
+    }
+    public static void heapifyy(int arr[], int i, int size){
+        int left = 2*i+1;
+        int right = 2*i+2;
+        
+        int maxIdx = i;
+
+        if(left < size && arr[left] > arr[maxIdx]){
+            maxIdx = left;
+        }
+        if(right < size && arr[right ] > arr[maxIdx]){
+            maxIdx = right;
+        }
+
+        if(maxIdx != i){
+            int temp = arr[i];
+            arr[i] = arr[maxIdx];
+            arr[maxIdx] = temp;
+
+            heapifyy(arr, maxIdx, size);
+        }
     }
     
     public static void main(String args[]){
@@ -80,10 +120,19 @@ public class b_heaps {
         h.add(4);
         h.add(1);
         h.add(5);
-        
         while(!h.isEmpty()){
-            System.out.println(h.peek());
+            System.out.print(h.peek()+"  ");
             h.remove();
         }
+        System.out.println();
+
+
+
+        int arr[] = {1,2,4,5,3};
+        heapSort(arr);
+        for(int i = 0;i<arr.length;i++){
+            System.out.print(arr[i]+" ");
+        }
+        
     }
 }
