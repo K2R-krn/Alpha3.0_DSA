@@ -74,7 +74,7 @@ public class b_heaps {
     }
 
 
-    //*  HEAPSORT
+    //*  HEAPSORT     -    O ( nlogn )    [ as heapify log n and heap sort runs for n times so nlogn ]__  || SC - O(1) || TC - O(nlogn) ||
     public static void heapSort(int arr[]){
         // Step 1 - Build MaxHeap
         int n = arr.length;
@@ -127,7 +127,7 @@ public class b_heaps {
         System.out.println();
 
 
-
+        // * Heapsort
         int arr[] = {1,2,4,5,3};
         heapSort(arr);
         for(int i = 0;i<arr.length;i++){
