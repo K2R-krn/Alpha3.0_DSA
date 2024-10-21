@@ -20,7 +20,7 @@ public class LinkedLL {
             if(head ==null){
                 head = tail = newNode;
                 return;
-            }
+            }   
             //2
             newNode.next = head; //linked one node to another   
             //3

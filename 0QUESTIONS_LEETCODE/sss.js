@@ -20,13 +20,17 @@ let wordCities = {
 let largeCities = {
 
 };
-for (const city in wordCities) {
-    if (wordCities[city]>50000) {
-        continue;
+// for (const city in wordCities) {
+//     if (wordCities[city]>50000) {
+//         continue;
         
-    }
-    largeCities[city] = wordCities[city];
+//     }
+//     largeCities[city] = wordCities[city];
     
-}
+// }
+
+array.forEach(element => {
+    
+});
 console.log(wordCities);
 console.log(largeCities);
