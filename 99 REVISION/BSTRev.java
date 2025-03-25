@@ -8,6 +8,7 @@ public class BSTRev {
         private Node left;
         private Node right;
         private int height;
+        private Node next;
 
         public Node(int data){
             this.data = data;
@@ -270,6 +271,87 @@ public class BSTRev {
         }
         return result;
     }
+
+    //^ 6.  (116) Populating Next Right Pointers in Each Node
+    //& / // Optimized BFS without extra space (O(1) space complexity).
+    //& / LOGIC USED : :
+        //&    - Since the tree is perfect, every node has both left and right children.
+        //&    - By iterating level-wise and using .next pointers, no extra space is required.
+        //&    - Key operations:
+        //&         - Connect left child to right child (curr.left.next = curr.right).
+        //&         - Connect right child to the next node’s left child (curr.right.next = curr.next.left).
+    public Node connectNodesofALevel(Node root){
+        if(root == null) return null;
+
+        Node leftMost = root;
+
+        while(leftMost.left!= null){
+            Node curr = leftMost;
+            while(curr!=null){
+                curr.left.next = curr.right;
+                if(curr.next!=null) curr.right.next = curr.next.left;
+                curr = curr.next;
+            }
+            leftMost = leftMost.left;
+        }
+        return root;
+    }
+
+    //^ 7.  (117) Populating Next Right Pointers in Each Node II  -  Difference in this and above is that here TREE IS NOT PERFECT
+    public Node connect(Node root) {
+        if(root == null) return null;
+
+        Node leftMost = root;
+
+        while(leftMost!=null){
+            Node curr = leftMost;
+            Node dummy = new Node(0);
+            Node prev = dummy;
+
+            while(curr!=null){
+                if(curr.left!=null){
+                    prev.next = curr.left;
+                    prev = prev.next;
+                }
+                if(curr.right!=null){
+                    prev.next = curr.right;
+                    prev = prev.next;
+                }
+                curr = curr.next;
+            }
+            leftMost = dummy.next;
+        }
+        return root;
+    }
+
+    //^ 8.   (199) Binary Tree Right Side View  // LEFT side view
+
+    // FULL BFS CODE - JUST ONE CONDITION EXTRA WHICH IS UNDER FOR LOOP 
+    public List<Integer> rightSideView(Node root) {
+        List<Integer> result = new ArrayList<>();
+        if(root == null) return result;
+
+        Queue<Node> q = new LinkedList<>();
+        q.offer(root);
+
+        while(!q.isEmpty()){
+            
+            int lvSize = q.size();
+
+            for(int i = 0;i<lvSize;i++){
+                Node curr = q.poll();
+                if( i == lvSize-1) result.add(curr.data); //  RIGHT SIDE = when on last element it adds it to result 
+                //if( i == 0) result.add(curr.data); //  LEFT SIDE = when on last element it adds it to result
+                if(curr.left!= null) q.offer(curr.left);
+                if(curr.right!= null) q.offer(curr.right);
+            }
+        }
+        return result;
+    }
+
+
+
+
     public static void main(String args[]){
         BSTRev tree = new BSTRev();
         int[] nums = {5,2,7,1,4,6,9,8,3,10};
