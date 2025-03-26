@@ -350,7 +350,115 @@ public class BSTRev {
         return result;
     }
 
+    //^  9.  (993)  Cousins in Binary Tree
+    public boolean isCousins(Node root, int x, int y) {
+        
+        if(root == null) return false;
 
+        Queue<Node> q = new LinkedList<>();
+        q.offer(root);
+
+        while(!q.isEmpty()){
+            int size = q.size();
+            boolean foundX = false, foundY = false;
+            for(int i = 0;i<size;i++){
+                Node curr = q.poll();
+
+                // Checking if they have same parent.
+                if(curr.left!=null && curr.right!=null){
+                    if((curr.left.data == x && curr.right.data == y) || 
+                    (curr.right.data == x && curr.left.data == y)) {
+                        return false;
+                    }
+                }
+
+                // Making pointer true if One found
+                if(curr.left!=null){
+                    q.offer(curr.left);
+                    if(curr.left.data == x) foundX = true;
+                    if(curr.left.data == y) foundY = true;
+                } 
+                if(curr.right!=null){
+                    q.offer(curr.right);
+                    if(curr.right.data == x) foundX = true;
+                    if(curr.right.data == y) foundY = true;
+                } 
+            
+            }
+
+            // Check   - BOTH TRUE = same level not siblings but yes cousins 
+            //         - ONE TRUE = one on one level another not on that level = not cousins
+            if(foundX == true && foundY==true) return true;
+            if(foundX == true || foundY==true) return false;
+        }
+        return false;
+    }
+
+    //^  (101) Symmetric Tree
+    public boolean isMirror(Node left, Node right){
+        // Both left and right null -> return true
+        if(left == null && right == null) return true;
+        // When Both not null then -> If any one null or value of left or right not same -> false
+        if(left == null || right == null || left.data !=right.data) return false;
+        // // If this level perfect -> check for left.left, right.right && left.right, right.left
+        return isMirror(left.left, right.right)&& isMirror(left.right, right.left);
+    }
+
+    public boolean isSymmetric(Node root) {
+        // Base cases:
+        //      - If both nodes are null, return true (they are symmetric).
+        //      - If only one is null or values don’t match, return false.
+        // Recursively check:
+        //      - left.left with right.right
+        //      - left.right with right.left
+        // If all recursive calls return true, the tree is symmetric.
+
+        if(root == null) return true;
+        return isMirror( root.left,  root.right);
+        
+
+
+        // If the root is null, return true (an empty tree is symmetric).
+        // -Initialize a queue and enqueue the left and right children of the root.
+        // -Perform a level-order traversal:
+        //      -Dequeue two nodes (left and right).
+        //      -If both are null, continue to the next iteration.
+        //      -If only one is null or their values don’t match, return false.
+        //      -Enqueue their children in the order:
+        //      -left.left with right.right
+        //      -left.right with right.left
+        // -If the queue is exhausted without mismatches, return true.
+        
+        // if(root == null) return true;
+
+        // Queue<Node> q = new LinkedList<>();
+        // q.add(root.left);
+        // q.add(root.right);
+
+        // while(!q.isEmpty()){
+        //     Node left = q.poll();
+        //     Node right = q.poll();
+
+        //     if(left==null && right == null){
+        //         continue;
+        //     }
+
+        //     if(left == null || right == null){
+        //         return false;
+        //     }
+
+        //     if(left.data != right.data){
+        //         return false;
+        //     }
+
+        //     q.add(left.left);
+        //     q.add(right.right);
+        //     q.add(left.right);
+        //     q.add(right.left);
+        // }
+        // return true;
+
+    }
 
 
     public static void main(String args[]){
