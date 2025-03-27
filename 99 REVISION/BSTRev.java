@@ -462,7 +462,7 @@ public class BSTRev {
 
 
     //*  D  F  S     D E P T H   F I R S T   S E A R C H   T R A V E R S A L S
-    //^  HEIGHT OF A TREE
+    //^  HEIGHT OF A TREE [ 104. Maximum Depth of Binary Tree ]
     // Recursively Finding height
     // BC - base case = if leaf node return 0
     // post leaf will keep on adding 1
@@ -476,7 +476,22 @@ public class BSTRev {
         return (Math.max(lh,rh))+1;
     }
 
-    //^ COUNT NODES
+    //^ 111. Minimum Depth of Binary Tree [ min height of tree]
+    public int minHeight(Node node){
+        if(root == null) return 0;
+        if(root.left==null) return minHeight(node.right);
+        if(root.right==null) return minHeight(node.left);
+
+        int lh = minHeight(node.left);
+        int rh = minHeight(node.right);
+        
+        return Math.min(lh, rh)+1;
+    
+    }
+
+
+
+    //^ 222. Count Complete Tree Nodes  [ COUNT NODES ]
     public int countNodes(Node root) {
         if(root == null) return 0;
         int lc = countNodes(root.left);
@@ -484,6 +499,34 @@ public class BSTRev {
 
         return lc+rc+1;
     }
+
+    //^ COUNT EDGES
+    public int countEdges(Node root){
+        return countNodes(root)-1;
+    }
+
+    //^  543. Diameter of Binary Tree
+    int diaMeter = 0;
+    public int diameterOfBT(Node root){
+        diaHelperHeight(root);
+        return diaMeter;
+    }
+    public int diaHelperHeight(Node root){
+        if(root == null) return 0;
+
+        int lh = diaHelperHeight(root.left);
+        int rh = diaHelperHeight(root.right);
+        
+        int dia = lh+rh;
+        diaMeter = Math.max(dia, diaMeter);
+
+        return Math.max(lh,rh)+1;
+    
+    }
+
+
+
+
 
 
 
