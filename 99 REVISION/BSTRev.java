@@ -394,7 +394,7 @@ public class BSTRev {
         return false;
     }
 
-    //^  (101) Symmetric Tree
+    //^ 10.  (101) Symmetric Tree
     public boolean isMirror(Node left, Node right){
         // Both left and right null -> return true
         if(left == null && right == null) return true;
@@ -459,6 +459,32 @@ public class BSTRev {
         // return true;
 
     }
+
+
+    //*  D  F  S     D E P T H   F I R S T   S E A R C H   T R A V E R S A L S
+    //^  HEIGHT OF A TREE
+    // Recursively Finding height
+    // BC - base case = if leaf node return 0
+    // post leaf will keep on adding 1
+    // get maximum of left or right and add 1 for that node and consider max length
+    // TC - O(n)  SC - O(n) as recurrsion
+    public int maxDepth(Node root) {
+        if(root == null) return 0;
+        int lh = maxDepth(root.left);
+        int rh = maxDepth(root.right);
+        
+        return (Math.max(lh,rh))+1;
+    }
+
+    //^ COUNT NODES
+    public int countNodes(Node root) {
+        if(root == null) return 0;
+        int lc = countNodes(root.left);
+        int rc = countNodes(root.right);
+
+        return lc+rc+1;
+    }
+
 
 
     public static void main(String args[]){
