@@ -484,7 +484,7 @@ public class BSTRev {
 
         int lh = minHeight(node.left);
         int rh = minHeight(node.right);
-
+        
         return Math.min(lh, rh)+1;
     
     }
@@ -521,55 +521,14 @@ public class BSTRev {
         diaMeter = Math.max(dia, diaMeter);
 
         return Math.max(lh,rh)+1;
+    
     }
 
 
-    //^ Q11    (226) Invert Binary Tree    /    Mirror of a binary Tree
-    // Purpose: Mirrors a binary tree by swapping left and right subtrees at each node.
-    // Base Case: If root == null, return null (empty tree).
-    // Recursive Calls: First invert left and right subtrees.
-    // Swap Operation: After inversion, swap root.left and root.right.
-    // Return Value: Return the modified root after swapping.
-    // Time Complexity: O(N) (each node is visited once).
-    // Space Complexity: O(H) (recursion depth; O(log N) for balanced, O(N) for skewed trees).
-    public Node invertTree(Node root) {
-        if(root == null) return null;
 
 
-        Node l = invertTree(root.left);
-        Node r = invertTree(root.right);
 
-        root.left = r;
-        root.right= l;
 
-        return root;
-    }
-
-    //^ 13  108. Convert Sorted Array to Binary Search Tree
-    // Purpose: Convert a sorted array into a height-balanced BST.
-    // Key Idea: Middle element of the array becomes the root to maintain balance.
-    // Recursive Calls:
-    //      Left half of the array → Left subtree.
-    //      Right half of the array → Right subtree.
-    // Base Case: If left > right, return null (no elements left).
-    // Time Complexity: O(N) (each element is processed once).
-    // Space Complexity: O(log N) (recursive call stack for balanced BST).
-
-    public Node sortedArrayToBST(int[] nums) {
-        return constructBST(nums, 0, nums.length-1);
-        
-    }
-    public Node constructBST(int[] nums, int left, int right){
-        if(left>right) return null;
-
-        int mid = left + (right-left) / 2;
-        Node root = new Node(nums[mid]);
-
-        root.left = constructBST(nums, left, mid-1);
-        root.right = constructBST(nums, mid+1, right);
-
-        return root;
-    }
 
     public static void main(String args[]){
         BSTRev tree = new BSTRev();
