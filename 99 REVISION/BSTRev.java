@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.LinkedList;
 
+import javax.swing.SpringLayout.Constraints;
 import javax.swing.tree.TreeNode;
 public class BSTRev {
     public class Node{
@@ -592,6 +593,15 @@ public class BSTRev {
     }
 
     //^ 15.  (98) Validate Binary Search Tree
+    // Function: Checks if a given binary tree is a valid BST.
+
+    // Base Case: If the node is null, return true (empty trees are valid BSTs).
+    // Constraints Check: Ensure node.data is within the valid range (low < node.data < high).
+    // Recursive Calls:
+    //     Left subtree: helper(node.left, low, node.data) (upper bound updated).
+    //     Right subtree: helper(node.right, node.data, high) (lower bound updated).
+    // Final Return: Both left and right subtrees must be valid BSTs.
+
     public boolean isValidBST(Node root){
         return helper(root, null, null);
     }
@@ -606,8 +616,7 @@ public class BSTRev {
         boolean rightTree = helper(node.right, node.data, high);
         
         return leftTree && rightTree;
-    
-    }
+    } 
 
 
 
