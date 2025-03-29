@@ -571,6 +571,46 @@ public class BSTRev {
         return root;
     }
 
+    //^ 14.   ( 114 ) Flatten Binary Tree to Linked List
+    // The "linked list" should be in the same order as a pre-order traversal of the binary tree.
+
+    // DID ON OWN - BEST
+        // -> Check if root has left. -> if so go to bottom most right of root.left -> then attach there root.right -> now nothing on root.right so attach whole root.left on root.right -> now root.left = null and nothing on left. -> run same thing for root.right that is done with root now go down and fix others.. 
+    public void flattenBTtoLL(Node root){
+        if( root == null ) return;
+
+        if(root.left!= null){
+            Node temp = root.left;
+            while(temp.right!=null){
+                temp = temp.right;
+            }
+            temp.right = root.left;
+            root.right = root.left;
+            root.left = null;
+        }
+        flattenBTtoLL(root.right);
+    }
+
+    //^ 15.  (98) Validate Binary Search Tree
+    public boolean isValidBST(Node root){
+        return helper(root, null, null);
+    }
+
+    public boolean helper(Node node, Integer low, Integer high){
+        if(node == null) return true;
+
+        if(low!=null && node.data <= low) return false;
+        if(high!=null && node.data >= high) return false;
+
+        boolean leftTree = helper(node.left, low, node.data);
+        boolean rightTree = helper(node.right, node.data, high);
+        
+        return leftTree && rightTree;
+    
+    }
+
+
+
 
 
 
