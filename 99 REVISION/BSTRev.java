@@ -723,6 +723,129 @@ public class BSTRev {
         return helperSum(node.left, sum)+ helperSum(node.right, sum);
     }
 
+    //^ 22.  (124)  Binary Tree Maximum Path Sum
+    int ans = Integer.MIN_VALUE;
+    public int maxPathSum(Node root){
+        calcMaxPathSum(root);
+        return ans;
+    }
+    public int calcMaxPathSum(Node node){
+        if(node == null) return 0;
+        // 1. 
+        int left = calcMaxPathSum(node.left);
+        int right = calcMaxPathSum(node.right);
+
+        //2. if any value is negetive its better to consider it as 0
+        left = Math.max(left, 0);
+        right = Math.max(right, 0);
+
+        //3. Calc path sum and update if better
+        int pathSum = left+right+node.data;
+        ans = Math.max(pathSum, ans);
+        
+        //4. Return sum with best path one
+        return Math.max(left, right)+node.data;
+    }
+
+
+    //^  23. Find if a given path exists in a Binary Tree between root and leaf ( No internal paths )
+    public boolean pathExist(Node node, int[] arr){
+        if(node == null) return arr.length==0;
+
+        return checkPath(node, arr, 0);
+    } 
+    public boolean checkPath(Node node, int[] arr, int idx){
+        if(node == null) return false;
+        
+        // 1. If idx greater than arr.length OR node.data is not equal to arr[idx] -> FALSE
+        if(idx>=arr.length || node.data != arr[idx]){
+            return false;
+        }
+        // 2. If leaf and idx at last -> TRUE
+        if(node.left == null && node.right == null && idx==arr.length-1){
+            return true;
+        }
+        // 3. ✅ match found for current index. So we go deeper to check if the next value in the array (arr[idx + 1]) exists in either the left or right subtree.
+        return checkPath(node.left, arr, idx+1)|| checkPath(node.right, arr, idx+1);
+    }
+
+    //^ -  Same as above but Find path anywhere in tree if it exist or no -> Not only between root and leaf..
+    public boolean pathExistAnywhere(Node node, int[] arr){
+        if(node == null) return arr.length==0;
+
+        if(checkPath(node, arr, 0)) return true;
+        return pathExistAnywhere(node.left, arr) || pathExistAnywhere(node.right, arr);
+    } 
+
+
+    //^  Q24. // Count Number of Path that exist in BT with a given sum.
+    public int countPaths(Node node, int sum){
+        List<Integer> path = new LinkedList<>();
+        return cPathHelper(node, sum, path);
+    }
+    public int cPathHelper(Node node, int s, List<Integer> path){
+        if(node == null) return 0;
+
+        path.add(node.data);
+        int count = 0;
+        int sum = 0;
+        // How many paths can i make
+        ListIterator<Integer> itr = path.listIterator(path.size());
+        while(itr.hasPrevious()){
+            sum+=itr.previous();
+
+            if(s==sum) count++;
+        }
+
+        count += cPathHelper(node.left, s , path) + cPathHelper(node.right, sum, path);
+
+        // backtrack
+        path.remove(path.size()-1);
+        return count;
+    }
+
+
+    //^  25.  DFS ( with STack iterative approachj) Preorder Iterative Approach
+    public void dfsIterative(Node node){
+        if(node == null) {
+            return;
+        }
+
+        Stack<Node> stack = new Stack<>();
+        stack.push(node);
+
+        while(!stack.isEmpty()){
+            Node removed = stack.pop();     // 1. Visit node
+            System.out.print(removed.data + " "); // 2. Print it
+            if(removed.right != null ) stack.push(removed.right); // 3. Pushing right first so left processed first   ( LIFO )
+            if(removed.left != null ) stack.push(removed.left);
+        }
+    }
+
+    //^   (257) Binary Tree Paths
+    public List<String> binaryTreePaths(Node root) {
+        List<String> ans = new ArrayList<>();
+        helper(root,"", ans);
+        return ans;
+    }
+    public void helper(Node node, String path, List<String> ans){
+        if(node == null) return;
+
+        // 1. Build current path -> ADDING CURRENT VALUE TO PATH
+        path+= node.data;
+
+        // 3. If leaf node -> add full path to result 
+        if(node.left == null && node.right == null){
+            ans.add(path);
+            return ;
+        }
+
+        // 2. Adsding -> as we already added current value || and calling for left and right 
+        path+="->";
+        helper(node.left, path, ans);
+        helper(node.right, path, ans);
+
+    }
 
     public static void main(String args[]){
         BSTRev tree = new BSTRev();
