@@ -610,9 +610,11 @@ public class BSTRev {
     public boolean helper(Node node, Integer low, Integer high){
         if(node == null) return true;
 
+        // Below two lines are validating the current node’s value against the allowed range
         if(low!=null && node.data <= low) return false;
         if(high!=null && node.data >= high) return false;
 
+        // These two lines recursively validate the left and right subtrees of the current node, while updating the allowed value range for each side:
         boolean leftTree = helper(node.left, low, node.data);
         boolean rightTree = helper(node.right, node.data, high);
         
@@ -620,10 +622,106 @@ public class BSTRev {
     } 
 
 
+    //^ 16.   (236) Lowest Common Ancestor LCA of a BT
+    public Node lowestCommonAncestor(Node root, Node p, Node q){
+        if(root == null) return null;
+
+        if(root==p || root == q) return root; // If found any one, return it immideately no need to go deeper..
+
+        // Now call for left and right if not found there.
+        Node left = lowestCommonAncestor(root.left, p, q);
+        Node right = lowestCommonAncestor(root.right, p, q);
+
+        // If left and right not null that means we got both at curr node
+        if(left!= null && right!= null){
+            return root;
+        }
+
+        // Any one returned // Another not found // that means another one is in subtree of one returned..  .// No need to check below then just return whichever found as its the lca for both..
+        if(left == null){
+            return right;
+        } 
+        else{
+            return left;
+        }
+    }
+
+    //^  17. (230) Kth Smallest Element in a BST
+    // Inorder traversal of a BST gives nodes in sorted (ascending) order.
+    // This approach traverses nodes one-by-one in that order and returns the k-th visited node.
+
+    int count = 0;
+    public int kthSmallest(Node root, int k) {
+        return helper(root, k).data;
+    }
+    public Node helper(Node root, int k){
+        if(root == null ) return null;
+        
+        // Check left // Recursive left traversal (inorder):
+        Node left = helper(root.left, k);
+        if(left!= null) return left;
+
+        // Visit current node:
+        count++;
+        if(count == k) return root;
+        
+        // Right subtree traversal:
+        return helper(root.right, k);
+    }
+
+    //^ 18.  (105)  Construct Binary Tree from Preorder and Inorder Traversal
+    // BELOW IS BASICALLY LESS EFFICIENT WAY OF SOLVING THIS 
+    public Node buildTree(int[] preorder, int[] inorder) {
+        if(preorder.length == 0) return null;
+
+        // 1. Root element = first element of preorder
+        int root = preorder[0];
+        int idx = 0; // idx in inorder arr [ for now 0 - below we find its index]
+
+        // 2. Find index of this root in INORDER ARRAY
+        for(int i = 0;i<inorder.length;i++){
+            if(inorder[i] == root) idx = i;
+        }
+
+        // 3. New node for root created
+        Node node = new Node(root);
+
+        // 4. Recurssive call for left and right of this node. With changed arr
+        node.left = buildTree(Arrays.copyOfRange(preorder, 1, idx+1), Arrays.copyOfRange(inorder, 0, idx+1));
+        node.right = buildTree(Arrays.copyOfRange(preorder, idx+1, preorder.length), Arrays.copyOfRange(inorder, idx+1, inorder.length));
+
+        return node;
+    }
+
+    //^ 19. (297) Serialize and Deserialize Binary Tree
 
 
 
 
+    //^  20. (112) Path Sum
+    public boolean isSum(Node root, int sum){
+        if(root == null) return false;
+
+        if(root.data == sum && root.left!= null && root.right!= null){
+            return true;
+        }
+
+        return isSum(root.left, sum-root.data) || isSum(root.right, sum-root.data);
+    }
+
+    //^ 21. (129) Sum Root to Leaf Numbers
+    public int sumNumbers(Node root) {
+        return helperSum(root, 0);
+    }
+    public int helperSum(Node node, int sum){
+        if(node == null) return 0;
+        // Updating sum at a node
+        sum = sum*10+node.data; 
+        // If leaf node -> return SUM
+        if(node.left == null && node.right == null) return sum;
+        // Then return total of left and right node .. 
+        return helperSum(node.left, sum)+ helperSum(node.right, sum);
+    }
 
 
     public static void main(String args[]){
