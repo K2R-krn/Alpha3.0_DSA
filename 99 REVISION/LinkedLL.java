@@ -97,7 +97,7 @@ public class LinkedLL {
             }
             head = prev;
         }
-        // ^  REMOVE Nth ELEMENT FROM LL
+        // ^  REMOVE Nth ELEMENT FROM END of LL
         public void removeNth(int idx){
             // find size
             int size = 0;
