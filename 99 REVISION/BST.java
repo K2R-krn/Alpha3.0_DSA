@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Stack;
 
 class Node{
     int data;
@@ -29,12 +30,40 @@ class BinaryTree{
         System.out.print(node.data + " ");
         inorder(node.right);
     }
+    public void inOrderI(Node node){
+        Stack<Node> st = new Stack<>();
+        Node curr = root;
+        while(curr!= null || !st.isEmpty()){
+
+            // travel leftmost for inorder as left first
+            while(curr!=null){
+                st.add(curr);
+                curr = curr.left;
+            }
+            curr = st.pop();
+            System.out.print(curr.data+" ");
+            curr = curr.right;
+        }
+        return;
+    }
 
     public void preorder(Node node) {
         if (node == null) return;
         System.out.print(node.data + " ");
         preorder(node.left);
         preorder(node.right);
+    }
+    public void preOrderI(Node root){
+        
+        Stack<Node> st = new Stack<>();
+        st.add(root);
+        while(!st.isEmpty()){
+            Node curr = st.pop();
+            System.out.print(curr.data);
+            if(curr.right!= null) st.add(curr.right);
+            if(curr.left!= null) st.add(curr.left);
+        }
+
     }
 
     public void postorder(Node node) {
@@ -73,7 +102,14 @@ class BinaryTree{
 public class BST {
     public static void main(String args[]){
         BinaryTree bt1 = new BinaryTree();
-        bt1.root = 
+        bt1.root = new Node(4); 
+        bt1.root.left = new Node(3);
+        bt1.root.right = new Node(5);
+        bt1.root.left.left = new Node(1);
+        bt1.root.left.right = new Node(2);
+        bt1.root.right.right = new Node(7);
+
+        bt1.inOrderI(bt1.root);
     }
 
 }
