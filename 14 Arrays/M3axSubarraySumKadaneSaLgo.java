@@ -1,11 +1,25 @@
 public class M3axSubarraySumKadaneSaLgo {                       //^ Max  Subarray   ( KADANEs ALGO )
+
+    public static int maxSubarraySum(int[] nums) { // FOR ALL TYPE OF NUMBERS
+        int maxSum = nums[0];
+        int currSum = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            currSum = Math.max(nums[i], currSum + nums[i]);
+            maxSum = Math.max(maxSum, currSum);
+        }
+
+        return maxSum;
+    }
+
+
+
     public static void M3axSubarraySum(int numbers[]){      //^  WITH NEGETIVE ARRAY  VERIFIED
         int ms = Integer.MIN_VALUE;
         int cs = 0;
 
         for(int i = 0; i<numbers.length;i++){
             cs+=numbers[i];
-
             ms = Math.max(cs, ms);
 
             if(cs<0){
@@ -41,5 +55,6 @@ public class M3axSubarraySumKadaneSaLgo {                       //^ Max  Subarra
     public static void main(String args[]){
         int numbers[] = {-2,-3,4,-1,-2,1,5,-3};
         M3axSubarraySum(numbers);
+        System.out.println("MAX SUBARRAY SUM : "+maxSubarraySum(numbers));
     }                                                     //^ Fastest and easiest of all and TC least  O(n)   only one loop but main thing is LOGIC.
 }
